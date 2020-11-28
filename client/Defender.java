@@ -1,48 +1,29 @@
 package client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.Socket;
+import shared.RPCMethods;
 
-public class Defender extends Thread {
+public class Defender extends GameThread {
     private static String name = "Defender";
-    public static long time = System.currentTimeMillis();
-
-    Socket connection;
-    DataInputStream inputStream;
-    DataOutputStream outputStream;
 
     public Defender(Socket s, int id){
-        connection = s;
-
-        try{
-            inputStream = new DataInputStream(s.getInputStream());
-            outputStream = new DataOutputStream(s.getOutputStream());
-            setName(name + "-" + id);
-        }
-        catch(Exception e){
-            printError(e);
-        }
-    }
-
-    public void msg(String m) {
-    System.out.println(
-        "["+
-        (System.currentTimeMillis()-time)+
-        "] " + 
-        getName() +
-        ": " +
-        m);
-    }
-
-    public void printError(Exception e){
-        System.out.println("Error from " + getName() + ": " + e);
-        e.printStackTrace();
+        super(s, name + "-" + id);
     }
 
     public void run(){
         msg("has been created.");
-        //
+        
+        try{
+            while(true){
+                requestServerRPC(RPCMethods.END_CONNECTION);
+                closeConnections();
+                break;
+            }
+        }
+        catch(Exception e){
+            printError(e);
+        }
+
         msg("has terminated.");
     }
 }

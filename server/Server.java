@@ -12,17 +12,25 @@ public class Server {
     public void msg(String m){
         System.out.println("[Server]: " + m);
     }
-
+    
     public Server(){
         try{
+            // Monitors for synchronization
+            Armory armory = new Armory();
+
             // Create server
             server = new ServerSocket(port);
+            
             msg("has started. Listening on port " + port);
             
             while(true){
                 Socket s = server.accept();
                 msg("connected to new client. Creating ClientHelper thread with id = " + clientHelperCounter);
-                (new ClientHelper(s, clientHelperCounter++)).start();
+                (new ClientHelper(
+                    s, 
+                    clientHelperCounter++,
+                    armory
+                )).start();
             }
         }
         catch(Exception e){

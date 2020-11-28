@@ -1,48 +1,30 @@
 package client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.Socket;
 
-public class King extends Thread{
-    private static String name = "King";
-    public static long time = System.currentTimeMillis();
+import shared.RPCMethods;
 
-    Socket connection;
-    DataInputStream inputStream;
-    DataOutputStream outputStream;
+public class King extends GameThread{
+    private static String name = "King";
 
     public King(Socket s){
-        connection = s;
-
-        try{
-            inputStream = new DataInputStream(s.getInputStream());
-            outputStream = new DataOutputStream(s.getOutputStream());
-            setName(name);
-        }
-        catch(Exception e){
-            printError(e);
-        }
-    }
-
-    public void msg(String m) {
-    System.out.println(
-        "["+
-        (System.currentTimeMillis()-time)+
-        "] " + 
-        getName() +
-        ": " +
-        m);
-    }
-
-    public void printError(Exception e){
-        System.out.println("Error from " + getName() + ": " + e);
-        e.printStackTrace();
+        super(s, name);
     }
 
     public void run(){
         msg("has been created.");
-        //
+        
+        try{
+            while(true){
+                requestServerRPC(RPCMethods.END_CONNECTION);
+                closeConnections();
+                break;
+            }
+        }
+        catch(Exception e){
+            printError(e);
+        }
+
         msg("has terminated.");
     }
 }

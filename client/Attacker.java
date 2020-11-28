@@ -1,48 +1,35 @@
 package client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.Socket;
+import shared.RPCMethods;
 
-public class Attacker extends Thread {
+public class Attacker extends GameThread {
     private static String name = "Attacker";
-    public static long time = System.currentTimeMillis();
-
-    Socket connection;
-    DataInputStream inputStream;
-    DataOutputStream outputStream;
+    private int attackValue;
 
     public Attacker(Socket s, int id){
-        connection = s;
-
-        try{
-            inputStream = new DataInputStream(s.getInputStream());
-            outputStream = new DataOutputStream(s.getOutputStream());
-            setName(name + "-" + id);
-        }
-        catch(Exception e){
-            printError(e);
-        }
-    }
-
-    public void msg(String m) {
-    System.out.println(
-        "["+
-        (System.currentTimeMillis()-time)+
-        "] " + 
-        getName() +
-        ": " +
-        m);
-    }
-
-    public void printError(Exception e){
-        System.out.println("Error from " + getName() + ": " + e);
-        e.printStackTrace();
+        super(s, name + "-" + id);
     }
 
     public void run(){
         msg("has been created.");
-        //
+        
+        try{
+            // Get weapon from armory
+            requestServerRPC(RPCMethods.GRAB_WEAPON);
+            attackValue = Integer.parseInt(serverResponse());
+            msg("has obtained weapon of value " + attackValue);
+
+            while(true){
+                requestServerRPC(RPCMethods.END_CONNECTION);
+                closeConnections();
+                break;
+            }
+        }
+        catch(Exception e){
+            printError(e);
+        }
+
         msg("has terminated.");
     }
 }
