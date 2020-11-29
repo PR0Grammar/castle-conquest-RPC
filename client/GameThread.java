@@ -16,6 +16,7 @@ public class GameThread extends Thread {
     Socket connection;
     DataInputStream inputStream;
     DataOutputStream outputStream;
+    public boolean gameFinished = false;
 
     public GameThread(Socket s, String name) {
         connection = s;
@@ -49,12 +50,12 @@ public class GameThread extends Thread {
 
     // Read response from server
     // Values will only be string, up to implementation to determine type of value
-    public String serverResponse() throws IOException{
-        return inputStream.readUTF();
+    public int serverResponse() throws IOException{
+        return inputStream.readInt();
     }
 
     public void closeConnections() {
-        msg("closing connection to server.");
+        msg("Closing connection to server since game finished.");
         try {
             inputStream.close();
             outputStream.close();
@@ -62,5 +63,11 @@ public class GameThread extends Thread {
         } catch (Exception e) {
             printError(e);
         }
+    }
+
+    public void gameFinished() throws IOException{
+        gameFinished = true;
+        requestServerRPC(RPCMethods.END_CONNECTION);
+        closeConnections();
     }
 }

@@ -45,9 +45,9 @@ public class ClientHelper extends Thread{
         return rtr;
     }
 
-    public void writeToClient(String m){
+    public void writeToClient(int v){
         try{
-            outputStream.writeUTF(m);
+            outputStream.writeInt(v);
         }
         catch(Exception e){
             printError(e);
@@ -89,7 +89,19 @@ public class ClientHelper extends Thread{
         msg(clientThreadName + " has grabbed a weapon of value " + weaponVal);
         armory.leaveArmory(this, clientThreadName);
         
-        writeToClient(weaponVal + "");
+        writeToClient(weaponVal);
+    }
+
+    private void attackGate(){
+        // TODO:
+    }
+
+    private void defendGate(){
+        //TODO
+    }
+
+    private void rest(){
+        //TODO;
     }
     
     public void run(){
@@ -106,6 +118,9 @@ public class ClientHelper extends Thread{
                 switch(methodToInvoke){
                     case(RPCMethods.END_CONNECTION): 
                     case(RPCMethods.GRAB_WEAPON):
+                    case(RPCMethods.ATTACK_GATE):
+                    case(RPCMethods.DEFEND_GATE):
+                    case(RPCMethods.REST):
                         //msg(threadName + " has asked to execute " + RPCMethods.getMethodName(methodToInvoke) + ". Executing...");
                         break;
                     default:
@@ -119,6 +134,15 @@ public class ClientHelper extends Thread{
                         break;
                     case(RPCMethods.GRAB_WEAPON):
                         grabWeapon(threadName);
+                        break;
+                    case(RPCMethods.ATTACK_GATE):
+                        attackGate();
+                        break;
+                    case(RPCMethods.DEFEND_GATE):
+                        defendGate();
+                        break;
+                    case(RPCMethods.REST):
+                        rest();
                         break;
                     default:
                         break;

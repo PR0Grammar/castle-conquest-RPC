@@ -137,6 +137,7 @@ public class GateCoordinator {
         }
     }
 
+    // Last thread leaving a Gate calls this meethod to free up Gate and allow for waiting threads to go
     public synchronized void afterBattleEnds(Gate g){
         // Free up Gate
         g.setIsBattleReady(false);

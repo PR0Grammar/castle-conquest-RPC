@@ -11,19 +11,45 @@ public class Attacker extends GameThread {
         super(s, name + "-" + id);
     }
 
+    // If response from server is ever -1, that means game has finished, and we should end connection
     public void run(){
         msg("has been created.");
-        
+        int res;
         try{
             // Get weapon from armory
+            msg("Requesting server to grab a weapon");
             requestServerRPC(RPCMethods.GRAB_WEAPON);
-            attackValue = Integer.parseInt(serverResponse());
-            msg("has obtained weapon of value " + attackValue);
+            res = serverResponse();
+            
+            if(res == -1) gameFinished();
+            else{ 
+                attackValue = res;
+                msg("has obtained weapon of value " + attackValue);
+            }
 
-            while(true){
-                requestServerRPC(RPCMethods.END_CONNECTION);
-                closeConnections();
-                break;
+            while(!gameFinished){
+                // Attack a gate (includes choosing, waiting, battling)
+                msg("Requesting server to attack a gate.");
+                requestServerRPC(RPCMethods.ATTACK_GATE);
+                res = serverResponse();
+
+                if(res == -1){
+                    gameFinished();
+                    continue;
+                }
+
+                // Rest after a battle
+                msg("Requesting server to take rest after battle.");
+                requestServerRPC(RPCMethods.REST);
+                res = serverResponse();
+
+                if(res == -1){
+                    gameFinished();
+                    continue;
+                }
+                
+                // Temporary
+                gameFinished();
             }
         }
         catch(Exception e){

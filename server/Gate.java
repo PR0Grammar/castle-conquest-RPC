@@ -28,8 +28,8 @@ public class Gate {
 
     public Gate(GateCoordinator gc, int space, int id){
         this.id = id;
-        assignedAttackers = new ArrayList<>();
-        assignedDefenders = new ArrayList<>();
+        assignedAttackers = 0;
+        assignedDefenders = 0;
         arrivedAttackers = 0;
         arrivedDefenders = 0;
         
@@ -42,7 +42,7 @@ public class Gate {
         return name + '-' + id;
     }
 
-    // All GateCoordintaor methods
+    //**** All GateCoordintaor methods
     public int defenderCount(){
         return assignedDefenders;
     }
@@ -88,13 +88,13 @@ public class Gate {
         return isBattleReady;
     }
 
-    // All synchornized methods. ONLY ASSIGNED THREADS(attacker + defenders) ALLOWED TO USE.
+    //**** All synchornized methods. ONLY ASSIGNED THREADS(attacker + defenders) ALLOWED TO USE.
     public synchronized boolean battleCanBegin(){
         return arrivedAttackers == space && arrivedDefenders == space;
     }
 
     public synchronized void sumUpAtackersDefendersValues(){
-        // TODO;
+        // TODO
         System.out.println("SUM UP A D VALUES!");
     }
 

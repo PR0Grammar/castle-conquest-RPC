@@ -11,6 +11,7 @@ public class King extends GameThread{
         super(s, name);
     }
 
+    // If response from server is ever -1, that means game has finished, and we should end connection
     public void run(){
         msg("has been created.");
         
