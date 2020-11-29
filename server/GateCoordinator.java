@@ -52,8 +52,9 @@ public class GateCoordinator {
         Gate leastAttacked = null;
 
         for(Gate g: gates){
-            int attackerCount = g.getAttackerCount();
-            if(attackerCount < spacePerGate && attackerCount < leastAttackerCount){
+            int attackerCount = g.attackerCount();
+
+            if(g.canTakeMoreAttackers() && attackerCount < leastAttackerCount){
                 leastAttackerCount = attackerCount;
                 leastAttacked = g;
             }
@@ -67,6 +68,11 @@ public class GateCoordinator {
         // If this thread was the one from waitingDefender, remove it since it got a Gate
         if(leastAttacked != null && waitingIndexOfAttacker == 0){
             removeWaitingAttacker(convey);
+        }
+
+        // If Gate is now full, set isBattleReady=T to prevent assignment to this Gate
+        if(leastAttacked != null && leastAttacked.isFull()){
+            leastAttacked.setIsBattleReady(true);
         }
 
         return leastAttacked;
@@ -89,8 +95,9 @@ public class GateCoordinator {
         Gate leastDefended = null;
 
         for(Gate g: gates){
-            int defCount = g.getDefenderCount();
-            if(defCount < spacePerGate && defCount < leastDefendedCount){
+            int defCount = g.defenderCount();
+
+            if(g.canTakeMoreDefenders() && defCount < leastDefendedCount){
                 leastDefendedCount = defCount;
                 leastDefended = g;
             }
@@ -104,6 +111,11 @@ public class GateCoordinator {
         // If this thread was the one from waitingDefender, remove it since it got a Gate
         if(leastDefended != null && waitingIndexOfDefender == 0){
             removeWaitingDefender(convey);
+        }
+
+        // If Gate is now full, set isBattleReady=T to prevent assignment to this Gate
+        if(leastDefended != null && leastDefended.isFull()){
+            leastDefended.setIsBattleReady(true);
         }
 
         return leastDefended;
@@ -124,8 +136,20 @@ public class GateCoordinator {
             }
         }
     }
+
+    public synchronized void afterBattleEnds(Gate g){
+        // Free up Gate
+        g.setIsBattleReady(false);
+        g.unassignAttackers();
+        g.unassignDefenders();
+
+        // Let waiting threads know they can go to this Gate (FIFO order)
+        signalNextWaitingAttacker();
+        signalNextWaitingDefender();
+    }
+
     
-    public void attack(ClientHelper a){
+    public Gate findGateToAttack(ClientHelper a){
         Object convey = new Object();
 
         synchronized(convey){
@@ -141,11 +165,11 @@ public class GateCoordinator {
             // Platoon policy: signal next waiting attacker to try
             signalNextWaitingAttacker();
 
-            // TODO: Gate stuff
+            return leastAttackedGate;
         }
     }
 
-    public void defend(ClientHelper d){
+    public Gate findGateToDefend(ClientHelper d){
         Object convey = new Object();
 
         synchronized(convey){
@@ -162,8 +186,7 @@ public class GateCoordinator {
 
             // Platoon policy: signal next waiting defender to try
             signalNextWaitingDefender();
-
-            // TODO: Gate stuff
+            return leastDefendedGate;
         }
     }
 }
