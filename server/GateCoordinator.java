@@ -7,15 +7,18 @@ import java.util.ArrayList;
 
 public class GateCoordinator {
     private ArrayList<Gate> gates;
-    private final int spacePerGate;
     private ArrayList<Object> waitingAttackers;
     private ArrayList<Object> waitingDefenders;
 
-    public GateCoordinator(ArrayList<Gate> g, int spacePerGate){
-        gates = g;
+    public GateCoordinator(int numOfGates, int spacePerGate){
+        gates = new ArrayList<>();
         waitingAttackers = new ArrayList<>();
         waitingDefenders = new ArrayList<>();
-        this.spacePerGate = spacePerGate;
+
+        // Create the gates
+        for(int i = 0; i < numOfGates; i++){
+            gates.add(new Gate(this, spacePerGate, i));
+        }
     }
 
     private synchronized void addWaitingAttacker(Object convey){

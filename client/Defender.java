@@ -24,32 +24,30 @@ public class Defender extends GameThread {
 
     // If response from server is ever -1, that means game has finished, and we should end connection
     public void run(){
-        msg("has been created.");
+        msg("has been created with defense value of " + getDefendValue());
         int res;
         
         try{
             while(!gameFinished){
-                // Defend a gate (includes choosing, waiting, battling)
-                msg("Requesting server to defend a gate.");
-                requestServerRPC(RPCMethods.DEFEND_GATE);
-                res = serverResponse();
+                // // Defend a gate (includes choosing, waiting, battling)
+                // requestServerRPC(RPCMethods.DEFEND_GATE);
+                // res = serverResponse();
 
-                if(res == -1){
-                    gameFinished();
-                    continue;
-                }
+                // if(res == -1){
+                //     gameFinished();
+                //     continue;
+                // }
 
-                // Rest after a battle
-                msg("Requesting server to take rest after battle.");
-                requestServerRPC(RPCMethods.REST);
-                res = serverResponse();
+                // // Rest after a battle
+                // requestServerRPC(RPCMethods.REST);
+                // res = serverResponse();
 
-                if(res == -1){
-                    gameFinished();
-                    continue;
-                }
+                // if(res == -1){
+                //     gameFinished();
+                //     continue;
+                // }
 
-                // Temporary
+                // // Temporary
                 gameFinished();
             }
         }

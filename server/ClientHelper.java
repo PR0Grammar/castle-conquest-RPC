@@ -2,6 +2,7 @@ package server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -10,18 +11,23 @@ import shared.RPCMethods;
 public class ClientHelper extends Thread{    
     private static String name = "ClientHelper";
     public static long time = System.currentTimeMillis();
+    
+    private Armory armory;
+    private Castle castle;
+    private GateCoordinator gateCoordinator;
 
     private Socket connection;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
     private boolean connected;
-    private Armory armory;
 
-    public ClientHelper(Socket s, int id, Armory a){
+    public ClientHelper(Socket s, int id, Armory a, GateCoordinator gc, Castle c){
         connection = s;
 
         try{
             connected = true;
+            castle = c;
+            gateCoordinator = gc;
             armory = a;
             inputStream = new DataInputStream(s.getInputStream());
             outputStream = new DataOutputStream(s.getOutputStream());
@@ -39,8 +45,20 @@ public class ClientHelper extends Thread{
     public Object[] readFromClient() throws IOException{
         Object[] rtr = new Object[2];
 
-        rtr[0] = inputStream.readUTF();
-        rtr[1] = inputStream.readInt();
+        try{
+            rtr[0] = inputStream.readUTF();
+            rtr[1] = inputStream.readInt();
+        }
+        catch(Exception e){
+            // If the client closes the connection before we even get to read its request
+            // we just end
+            if(e instanceof EOFException){
+                endConnection();
+            }
+            else{
+                printError(e);
+            }
+        }
 
         return rtr;
     }
@@ -93,14 +111,20 @@ public class ClientHelper extends Thread{
     }
 
     private void attackGate(){
+        writeToClient(1);
+
         // TODO:
     }
 
     private void defendGate(){
+        writeToClient(1);
+
         //TODO
     }
 
     private void rest(){
+        writeToClient(1);
+
         //TODO;
     }
     
@@ -111,6 +135,8 @@ public class ClientHelper extends Thread{
             // Listen to requests from client
             while(connected){
                 Object[] nextMethod = readFromClient();
+                if(!connected) break;
+
                 String threadName = (String) nextMethod[0];
                 int methodToInvoke = (int) nextMethod[1];
 
