@@ -27,11 +27,13 @@ public class GateCoordinator {
         }
     }
 
-    public synchronized void platoonAllowNextAttacker(){
+    public synchronized void platoonAllowNextAttacker(ClientHelper c, String attackerName){
         // If others are waiting to go, and there is a gate available to attack
         // signal the next waiting attacker to go.
 
         if(waitingAttackers.size() > 0 && gateAvailableForAttacker()){
+            c.msg(attackerName + " is signaling next waiting attacker to go.");
+
             Object o = waitingAttackers.remove(0);
             synchronized(o){
                 o.notify();
@@ -43,11 +45,12 @@ public class GateCoordinator {
         }
     }
 
-    public synchronized void platoonAllowNextDefender(){
+    public synchronized void platoonAllowNextDefender(ClientHelper c, String defenderName){
         // If others are waiting to go, and there is a gate available to defend
         // signal the next waiting defender to go.
 
         if(waitingDefenders.size() > 0 && gateAvailableForDefender()){
+            c.msg(defenderName + " is signaling next waiting defender to go.");
             Object o = waitingDefenders.remove(0);
             synchronized(o){
                 o.notify();
@@ -100,6 +103,8 @@ public class GateCoordinator {
         if(waitingAttackers.size() > 0 && gateAvailableForAttacker() && !attackerIsGrabbing){
             Object o = waitingAttackers.remove(0);
             synchronized(o){o.notify();}
+
+            attackerIsGrabbing = true;
         }
     }
 
@@ -111,6 +116,8 @@ public class GateCoordinator {
             synchronized(o){
                 o.notify();
             }
+
+            defenderIsGrabbing = true;
         }
     }
 
@@ -167,7 +174,7 @@ public class GateCoordinator {
         if(!defenderIsGrabbing && waitingDefenders.size() == 0 && gateAvailableForDefender()){
             defenderIsGrabbing = true;
             d.msg(defenderName + " is grabbing a gate.");
-
+            
             return true;
         }
         else{

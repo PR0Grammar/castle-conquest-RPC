@@ -112,9 +112,9 @@ public class ClientHelper extends Thread{
 
     private void attackGate(String attackerName){
         // Get a gate to attack
-        gateCoordinator.attackerWaitForGate(this, attackerName);
+        gateCoordinator.attackerWaitForGate(this, attackerName);        
         Gate g = gateCoordinator.getGateToAttack(this, attackerName);
-        gateCoordinator.platoonAllowNextAttacker();
+        gateCoordinator.platoonAllowNextAttacker(this, attackerName);
 
         // Attack it
         g.attack(this, attackerName);
@@ -130,7 +130,7 @@ public class ClientHelper extends Thread{
         // Get a gate to defend
         gateCoordinator.defenderWaitForGate(this, defenderName);
         Gate g = gateCoordinator.getGateToDefend(this, defenderName);
-        gateCoordinator.platoonAllowNextDefender();
+        gateCoordinator.platoonAllowNextDefender(this, defenderName);
 
         // Defend it
         g.defend(this, defenderName);
