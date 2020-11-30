@@ -2,6 +2,8 @@ package server;
 
 import java.util.ArrayList;
 
+import client.Client;
+
 // Monitor class to allow for mutual exclusion over Gate assingnment
 // All operations related to Gate selection and waiting should be done through this monitor
 
@@ -9,11 +11,15 @@ public class GateCoordinator {
     private ArrayList<Gate> gates;
     private ArrayList<Object> waitingAttackers;
     private ArrayList<Object> waitingDefenders;
+    private boolean attackerIsGrabbing;
+    private boolean defenderIsGrabbing;
 
     public GateCoordinator(int numOfGates, int spacePerGate){
         gates = new ArrayList<>();
         waitingAttackers = new ArrayList<>();
         waitingDefenders = new ArrayList<>();
+        attackerIsGrabbing = false;
+        defenderIsGrabbing = false;
 
         // Create the gates
         for(int i = 0; i < numOfGates; i++){
@@ -21,121 +27,89 @@ public class GateCoordinator {
         }
     }
 
-    private synchronized void addWaitingAttacker(Object convey){
-        waitingAttackers.add(convey);
-    }
+    public synchronized void platoonAllowNextAttacker(){
+        // If others are waiting to go, and there is a gate available to attack
+        // signal the next waiting attacker to go.
 
-    public synchronized void removeWaitingAttacker(Object convey){
-        waitingAttackers.remove(convey);
-    }
-
-    public synchronized void addWaitingDefender(Object convey){
-        waitingDefenders.add(convey);
-    }
-
-    public synchronized void removeWaitingDefender(Object convey){
-        waitingDefenders.remove(convey);
-    }
-
-
-    private synchronized Gate getLeastAttackedGate(Object convey){
-        int waitingIndexOfAttacker = waitingAttackers.indexOf(convey);
-
-        // If others are waiting and this thread is not the next to go, return null
-        if(waitingAttackers.size() > 0 && waitingIndexOfAttacker != 0){
-            // If this thread is not already in the queue, add it
-            if(waitingIndexOfAttacker == -1){
-                waitingAttackers.add(convey);
+        if(waitingAttackers.size() > 0 && gateAvailableForAttacker()){
+            Object o = waitingAttackers.remove(0);
+            synchronized(o){
+                o.notify();
             }
-
-            return null;
         }
+        // Otherwise change flag so incoming attackers don't necessarily have to wait
+        else{
+            attackerIsGrabbing = false;
+        }
+    }
 
-        int leastAttackerCount = Integer.MAX_VALUE;
+    public synchronized void platoonAllowNextDefender(){
+        // If others are waiting to go, and there is a gate available to defend
+        // signal the next waiting defender to go.
+
+        if(waitingDefenders.size() > 0 && gateAvailableForDefender()){
+            Object o = waitingDefenders.remove(0);
+            synchronized(o){
+                o.notify();
+            }
+        }
+        // Otherwise change flag so incoming defenders don't necessarily have to wait
+        else{
+            defenderIsGrabbing = false;
+        }
+    }
+
+    public synchronized Gate getGateToAttack(ClientHelper c, String attackerName){
         Gate leastAttacked = null;
+        int numOfAttackersAtGate = Integer.MAX_VALUE;
 
         for(Gate g: gates){
-            int attackerCount = g.attackerCount();
-
-            if(g.canTakeMoreAttackers() && attackerCount < leastAttackerCount){
-                leastAttackerCount = attackerCount;
+            int numOfA = g.attackerCount();
+            if(!g.isBattleReady() && g.canTakeMoreAttackers() && numOfA < numOfAttackersAtGate){
                 leastAttacked = g;
+                numOfAttackersAtGate = numOfA;
             }
         }
 
-        // If no Gate available and thread is not already in waiting queue
-        if(leastAttacked == null && waitingIndexOfAttacker == -1){
-            addWaitingAttacker(convey);
-        }
-        
-        // If this thread was the one from waitingDefender, remove it since it got a Gate
-        if(leastAttacked != null && waitingIndexOfAttacker == 0){
-            removeWaitingAttacker(convey);
-        }
-
-        // If Gate is now full, set isBattleReady=T to prevent assignment to this Gate
-        if(leastAttacked != null && leastAttacked.isFull()){
-            leastAttacked.setIsBattleReady(true);
-        }
-
+        leastAttacked.assignAttacker();
+        c.msg(attackerName + " has been assigned to attack " + leastAttacked.getTitle() + ". They are headed there now");
         return leastAttacked;
     }
 
-    private synchronized Gate getLeastDefendedGate(Object convey){
-        int waitingIndexOfDefender = waitingDefenders.indexOf(convey);
-
-        // If others are waiting and this thread is not the next to go, return null
-        if(waitingDefenders.size() > 0 && waitingIndexOfDefender != 0){
-            // If this thread is not already in the queue, add it
-            if(waitingIndexOfDefender == -1){
-                addWaitingDefender(convey);
-            }
-            
-            return null;
-        }
-
-        int leastDefendedCount = Integer.MAX_VALUE;
+    public synchronized Gate getGateToDefend(ClientHelper c, String defenderName){
         Gate leastDefended = null;
+        int numOfDefendersAtGate = Integer.MAX_VALUE;
 
         for(Gate g: gates){
-            int defCount = g.defenderCount();
-
-            if(g.canTakeMoreDefenders() && defCount < leastDefendedCount){
-                leastDefendedCount = defCount;
+            int numOfD = g.defenderCount();
+            if(!g.isBattleReady() && g.canTakeMoreDefenders() && numOfD < numOfDefendersAtGate){
+                numOfDefendersAtGate = numOfD;
                 leastDefended = g;
             }
         }
 
-        // If no Gate available and thread is not already in waiting queue
-        if(leastDefended == null && waitingIndexOfDefender == -1){
-            addWaitingDefender(convey);
-        }
-        
-        // If this thread was the one from waitingDefender, remove it since it got a Gate
-        if(leastDefended != null && waitingIndexOfDefender == 0){
-            removeWaitingDefender(convey);
-        }
-
-        // If Gate is now full, set isBattleReady=T to prevent assignment to this Gate
-        if(leastDefended != null && leastDefended.isFull()){
-            leastDefended.setIsBattleReady(true);
-        }
-
+        leastDefended.assignDefender();
+        c.msg(defenderName + " has been assigned to defend " + leastDefended.getTitle() + ". They are headed there now");
         return leastDefended;
     }
 
-    public synchronized void signalNextWaitingAttacker(){
-        if(waitingAttackers.size() > 0){
-            synchronized(waitingAttackers.get(0)){
-                waitingAttackers.get(0).notify();
-            }
+    public synchronized void signalWaitingAttackersAfterBattle(){
+        // NOTE: we only signal is an attacker is not grabbing, since if there is,
+        // they'll signal using platoon policy
+
+        if(waitingAttackers.size() > 0 && gateAvailableForAttacker() && !attackerIsGrabbing){
+            Object o = waitingAttackers.remove(0);
+            synchronized(o){o.notify();}
         }
     }
 
-    public synchronized void signalNextWaitingDefender(){
-        if(waitingDefenders.size() > 0){
-            synchronized(waitingDefenders.get(0)){
-                waitingDefenders.get(0).notify();
+    public synchronized void signalWaitingDefendersAfterBattle(){
+        // NOTE: we only signal is an defender is not grabbing, since if there is,
+        // they'll signal using platoon policy
+        if(waitingDefenders.size() > 0 && gateAvailableForDefender() && !defenderIsGrabbing){
+            Object o = waitingDefenders.remove(0);
+            synchronized(o){
+                o.notify();
             }
         }
     }
@@ -148,49 +122,89 @@ public class GateCoordinator {
         g.unassignDefenders();
 
         // Let waiting threads know they can go to this Gate (FIFO order)
-        signalNextWaitingAttacker();
-        signalNextWaitingDefender();
+        signalWaitingAttackersAfterBattle();
+        signalWaitingDefendersAfterBattle();
     }
 
-    
-    public Gate findGateToAttack(ClientHelper a){
-        Object convey = new Object();
+    private synchronized boolean gateAvailableForAttacker(){
+        boolean hasGate = false;
 
-        synchronized(convey){
-            Gate leastAttackedGate = getLeastAttackedGate(convey);
-            
-            while(leastAttackedGate == null){
-                try{convey.wait();}
-                catch(Exception e){}
-
-                leastAttackedGate = getLeastAttackedGate(convey);
+        for(Gate g: gates){
+            if(!g.isBattleReady() && g.canTakeMoreAttackers()){
+                hasGate = true;
             }
+        }
 
-            // Platoon policy: signal next waiting attacker to try
-            signalNextWaitingAttacker();
+        return hasGate;
+    }
 
-            return leastAttackedGate;
+    private synchronized boolean gateAvailableForDefender(){
+        boolean hasGate = false;
+        
+        for(Gate g : gates){
+            if(!g.isBattleReady() && g.canTakeMoreDefenders()){
+                hasGate = true;
+            }
+        }
+        return hasGate;
+    }
+
+    private synchronized boolean attackerCanGrab(Object convey, ClientHelper a, String attackerName){
+        if(!attackerIsGrabbing &&  waitingAttackers.size() == 0 && gateAvailableForAttacker()){
+            attackerIsGrabbing = true;
+            a.msg(attackerName + " is grabbing a gate.");
+
+            return true;
+        }
+        else{
+            a.msg(attackerName + " has to wait for a gate since others ahead/grabbing, or no gate available");
+            waitingAttackers.add(convey);
+            return false;
         }
     }
 
-    public Gate findGateToDefend(ClientHelper d){
+    private synchronized boolean defenderCanGrab(Object convey, ClientHelper d, String defenderName){
+        if(!defenderIsGrabbing && waitingDefenders.size() == 0 && gateAvailableForDefender()){
+            defenderIsGrabbing = true;
+            d.msg(defenderName + " is grabbing a gate.");
+
+            return true;
+        }
+        else{
+            d.msg(defenderName + " has to wait for a gate since others ahead/grabbing, or no gate available");
+            waitingDefenders.add(convey);
+            return false;
+        }
+    }
+    
+    public void attackerWaitForGate(ClientHelper a, String attackerName){
         Object convey = new Object();
 
         synchronized(convey){
-            // Try and get a gate
-            Gate leastDefendedGate = getLeastDefendedGate(convey);
-
-            // If unsuccessful, wait to be signaled
-            while(leastDefendedGate == null){
-                try{convey.wait();}
-                catch(Exception e){}
-                // Try again
-                leastDefendedGate = getLeastDefendedGate(convey);
+            if(!attackerCanGrab(convey, a, attackerName)){
+                while(true){
+                    try{
+                        convey.wait(); 
+                        break;
+                    }catch(Exception e){}
+                }
             }
+        }
+    }
 
-            // Platoon policy: signal next waiting defender to try
-            signalNextWaitingDefender();
-            return leastDefendedGate;
+    public void defenderWaitForGate(ClientHelper d, String defenderName){
+        Object convey = new Object();
+
+        synchronized(convey){
+            if(!defenderCanGrab(convey, d, defenderName)){
+                while(true){
+                    try{
+                        convey.wait(); 
+                        break;
+                    }
+                    catch(Exception e){}
+                }
+            }
         }
     }
 }

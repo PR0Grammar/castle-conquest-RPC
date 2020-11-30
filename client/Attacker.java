@@ -45,9 +45,7 @@ public class Attacker extends GameThread {
                     gameFinished();
                     continue;
                 }
-                
-                //Temporary
-                gameFinished();
+    
             }
         }
         catch(Exception e){

@@ -104,32 +104,56 @@ public class ClientHelper extends Thread{
     private void grabWeapon(String clientThreadName){
         armory.enterArmory(this, clientThreadName);
         int weaponVal = armory.getWeapon();
-        msg(clientThreadName + " has grabbed a weapon of value " + weaponVal);
+        // HAHA msg(clientThreadName + " has grabbed a weapon of value " + weaponVal);
         armory.leaveArmory(this, clientThreadName);
         
         writeToClient(weaponVal);
     }
 
-    private void attackGate(){
-        writeToClient(1);
+    private void attackGate(String attackerName){
+        // Get a gate to attack
+        gateCoordinator.attackerWaitForGate(this, attackerName);
+        Gate g = gateCoordinator.getGateToAttack(this, attackerName);
+        gateCoordinator.platoonAllowNextAttacker();
 
-        // TODO:
+        // Attack it
+        g.attack(this, attackerName);
+
+        // Leave the gate after attacking
+        g.attackerLeaveGate(this, attackerName);
+
+        // Let client know we finished
+        writeToClient(1);
     }
 
-    private void defendGate(){
+    private void defendGate(String defenderName){
+        // Get a gate to defend
+        gateCoordinator.defenderWaitForGate(this, defenderName);
+        Gate g = gateCoordinator.getGateToDefend(this, defenderName);
+        gateCoordinator.platoonAllowNextDefender();
+
+        // Defend it
+        g.defend(this, defenderName);
+        
+        // Leave the gate after defending
+        g.defenderLeaveGate(this, defenderName);
+
+        // Let client know we finished
         writeToClient(1);
+    }
+
+    private void rest(String playerName){
+        msg(playerName + " is resting before the next battle");
 
         //TODO
-    }
+        try{Thread.sleep(4000);}catch(Exception e){}
 
-    private void rest(){
+        // Let client know we finished
         writeToClient(1);
-
-        //TODO;
     }
     
     public void run(){
-        //msg("has started.");
+        // HAHA msg("has started.");
 
         try{
             // Listen to requests from client
@@ -147,7 +171,7 @@ public class ClientHelper extends Thread{
                     case(RPCMethods.ATTACK_GATE):
                     case(RPCMethods.DEFEND_GATE):
                     case(RPCMethods.REST):
-                        //msg(threadName + " has asked to execute " + RPCMethods.getMethodName(methodToInvoke) + ". Executing...");
+                        // HAHA msg(threadName + " has asked to execute " + RPCMethods.getMethodName(methodToInvoke) + ". Executing...");
                         break;
                     default:
                         msg(threadName + " has sent request, but method does not exist.");
@@ -162,13 +186,13 @@ public class ClientHelper extends Thread{
                         grabWeapon(threadName);
                         break;
                     case(RPCMethods.ATTACK_GATE):
-                        attackGate();
+                        attackGate(threadName);
                         break;
                     case(RPCMethods.DEFEND_GATE):
-                        defendGate();
+                        defendGate(threadName);
                         break;
                     case(RPCMethods.REST):
-                        rest();
+                        rest(threadName);
                         break;
                     default:
                         break;
@@ -179,6 +203,6 @@ public class ClientHelper extends Thread{
             printError(e);
         }
 
-        //msg("has terminated.");
+        // HAHA msg("has terminated.");
     }
 }

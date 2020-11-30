@@ -29,26 +29,24 @@ public class Defender extends GameThread {
         
         try{
             while(!gameFinished){
-                // // Defend a gate (includes choosing, waiting, battling)
-                // requestServerRPC(RPCMethods.DEFEND_GATE);
-                // res = serverResponse();
+                // Defend a gate (includes choosing, waiting, battling)
+                requestServerRPC(RPCMethods.DEFEND_GATE);
+                res = serverResponse();
 
-                // if(res == -1){
-                //     gameFinished();
-                //     continue;
-                // }
+                if(res == -1){
+                    gameFinished();
+                    continue;
+                }
 
-                // // Rest after a battle
-                // requestServerRPC(RPCMethods.REST);
-                // res = serverResponse();
+                // Rest after a battle
+                requestServerRPC(RPCMethods.REST);
+                res = serverResponse();
 
-                // if(res == -1){
-                //     gameFinished();
-                //     continue;
-                // }
+                if(res == -1){
+                    gameFinished();
+                    continue;
+                }
 
-                // // Temporary
-                gameFinished();
             }
         }
         catch(Exception e){

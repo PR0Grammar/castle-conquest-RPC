@@ -23,15 +23,16 @@ public class Gate {
 
     // Variables used only by threads who are assigned to this gate.
     // They should be accessed only by synchronized methods in this class
-    private int arrivedAttackers;
-    private int arrivedDefenders;
+    private ArrayList<String> arrivedAttackers;
+    private ArrayList<String>  arrivedDefenders;
 
     public Gate(GateCoordinator gc, int space, int id){
         this.id = id;
         assignedAttackers = 0;
         assignedDefenders = 0;
-        arrivedAttackers = 0;
-        arrivedDefenders = 0;
+
+        arrivedAttackers = new ArrayList<>();
+        arrivedDefenders = new ArrayList<>();
         
         isBattleReady = false;
         this.space = space;
@@ -63,11 +64,11 @@ public class Gate {
         return assignedAttackers == space && assignedDefenders == space; 
     }
 
-    public void assignAttacker(String attackerName){
+    public void assignAttacker(){
         assignedAttackers++;
     }
 
-    public void assignDefender(String defenderName){
+    public void assignDefender(){
         assignedDefenders++;
     }
 
@@ -89,41 +90,57 @@ public class Gate {
     }
 
     //**** All synchornized methods. ONLY ASSIGNED THREADS(attacker + defenders) ALLOWED TO USE.
+    
+    // Can begin once all threads arrived
     public synchronized boolean battleCanBegin(){
-        return arrivedAttackers == space && arrivedDefenders == space;
+        return arrivedAttackers.size() == space && arrivedDefenders.size() == space;
     }
 
+    // Last thread to arrive executes this
     public synchronized void sumUpAtackersDefendersValues(){
         // TODO
+        String attackers = String.join(", ", arrivedAttackers);
+        String defenders = String.join(", ", arrivedDefenders);
+
+        System.out.println("Battle can begin at " + getTitle() + " with: " + attackers + " " + defenders);
+        
+        try{Thread.sleep(5000);}catch(Exception e){}
+
         System.out.println("SUM UP A D VALUES!");
     }
 
-    public synchronized void defenderLeaveGate(ClientHelper a, String defenderName) {
-        arrivedDefenders--;
+    // After battle, we leave the gate
+    public synchronized void defenderLeaveGate(ClientHelper d, String defenderName) {
+        arrivedDefenders.remove(defenderName);
 
+        d.msg(defenderName + " is leaving the " + getTitle());
         // If last thread to leave, free up Gate and let waiting threads go
-        if(arrivedAttackers + arrivedDefenders == 0){
+        if(arrivedAttackers.size() + arrivedDefenders.size() == 0){
             gateCoordinator.afterBattleEnds(this);
         }
     }
 
+    // After battle, we leave the gate
     public synchronized void attackerLeaveGate(ClientHelper a, String attackerName){
-        arrivedAttackers--;
+        arrivedAttackers.remove(attackerName);
         
+        
+        a.msg(attackerName + " is leaving the " + getTitle());
+
         // If last thread to leave, free up Gate and let waiting threads go
-        if(arrivedAttackers + arrivedDefenders == 0){
+        if(arrivedAttackers.size() + arrivedDefenders.size() == 0){
             gateCoordinator.afterBattleEnds(this);
         }
     }
-
 
     public synchronized void attack(ClientHelper c, String attackerName){
-        arrivedAttackers++;
+        arrivedAttackers.add(attackerName);
 
         c.msg(attackerName + " has arrived to " + getTitle());
 
         if(battleCanBegin()){
             c.msg(attackerName + " is last last to arrive to " + getTitle() + ". The battle can begin now. They will notify everyone.");
+            notifyAll(); // Last thread notifies everyone waiting at this Gate
             sumUpAtackersDefendersValues();
         }
         else{
@@ -134,7 +151,7 @@ public class Gate {
     }
 
     public synchronized void defend(ClientHelper c, String defenderName){
-        arrivedDefenders++;
+        arrivedDefenders.add(defenderName);
 
         c.msg(defenderName + " has arrived to " + getTitle());
 

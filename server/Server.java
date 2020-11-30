@@ -78,7 +78,7 @@ public class Server {
             // ClientHelper threads
             while (true) {
                 Socket s = server.accept();
-                msg("connected to new client. Creating ClientHelper thread with id = " + clientHelperCounter);
+                // HAHA msg("connected to new client. Creating ClientHelper thread with id = " + clientHelperCounter);
                 (new ClientHelper(s, clientHelperCounter++, armory, gateCoordinator, castle)).start();
             }
         } catch (Exception e) {
@@ -95,7 +95,6 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        // TODO: Allow for variable num gates/spaces
         new Server();
     }
 }
