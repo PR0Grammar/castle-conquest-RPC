@@ -12,8 +12,8 @@ public class Defender extends GameThread {
         return (int) Math.ceil(Math.random() * 10);
     }
 
-    public Defender(Socket s, int id){
-        super(s, name + "-" + id);
+    public Defender(int id){
+        super(name + "-" + id);
         defendValue = randomDefenseVal();
     }
 

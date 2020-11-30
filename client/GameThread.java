@@ -18,16 +18,22 @@ public class GameThread extends Thread {
     DataOutputStream outputStream;
     public boolean gameFinished = false;
 
-    public GameThread(Socket s, String name) {
+    public GameThread(String name) {
+        setName(name);
+    }
+
+    public void startConnection(Socket s){
+        msg("requesting to connect to server");
+        
         connection = s;
 
         try {
             inputStream = new DataInputStream(s.getInputStream());
             outputStream = new DataOutputStream(s.getOutputStream());
-            setName(name);
         } catch (Exception e) {
             printError(e);
         }
+        msg("is now connected to the server");
     }
 
     public void msg(String m) {

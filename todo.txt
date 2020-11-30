@@ -1,5 +1,5 @@
 - send over gates, space, castle defense value to server from client
-- get circular attacker and defender entering gates
+- get circular attacker and defender entering gates (Done???)
 - add code for castle damage 
     - including some way to get attacker/defender values
     - Company thread to handle it

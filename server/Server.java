@@ -1,9 +1,8 @@
 package server;
 
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -11,7 +10,7 @@ public class Server {
     private static int port = 3000;
     private static final int DEFAULT_NUMBER_OF_GATES = 2;
     private static final int DEFAULT_NUMBER_OF_SPACES = 3;
-    
+
     private ServerSocket server;
     private int clientHelperCounter = 0;
     private int numOfGates = DEFAULT_NUMBER_OF_GATES;
@@ -21,12 +20,41 @@ public class Server {
     private GateCoordinator gateCoordinator;
     private Castle castle;
 
-    public void msg(String m){
+    public void getInitialDataFromClient() {
+        msg("Waiting for client to send num of gates, spaces, and castle health...");
+        try {
+            Socket connection = server.accept();
+            msg("Connected to client.");
+            DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
+            DataInputStream dis = new DataInputStream(connection.getInputStream());
+
+
+            numOfGates = dis.readInt();
+            msg("Received num of gates: " + numOfGates);
+            numOfSpaces = dis.readInt();
+            msg("Received num of spaces per gate: " + numOfSpaces);
+            totalCastleHealth = dis.readInt();
+            msg("Received total castle heatlh: " + totalCastleHealth);
+
+            msg("Replying to client to let them know we got the data");
+            dos.writeInt(1); // Let client know we are good to go.
+
+            // Close connections
+            dos.close();
+            dis.close();
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Server error: " + e);
+            e.printStackTrace();
+        }
+    }
+
+    public void msg(String m) {
         System.out.println("[Server]: " + m);
     }
-    
+
     // Initialize Gates, GateCoordinator, Castle
-    public void initVariables(){
+    public void initVariables() {
         msg("Creating Armory...");
         armory = new Armory();
         msg("Creating Castle...");
@@ -35,41 +63,38 @@ public class Server {
         gateCoordinator = new GateCoordinator(numOfGates, numOfSpaces);
     }
 
-    public void startServer(){
-        try{
+    public void startServer() {
+        try {
             // Create server
             server = new ServerSocket(port);
             msg("has started. Listening on port " + port);
+
+            // Get initial variables
+            getInitialDataFromClient();
+            initVariables();
+
             msg("Ready to clients...");
 
             // ClientHelper threads
-            while(true){
+            while (true) {
                 Socket s = server.accept();
                 msg("connected to new client. Creating ClientHelper thread with id = " + clientHelperCounter);
-                (new ClientHelper(
-                    s, 
-                    clientHelperCounter++,
-                    armory,
-                    gateCoordinator,
-                    castle
-                )).start();
+                (new ClientHelper(s, clientHelperCounter++, armory, gateCoordinator, castle)).start();
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Server error: " + e);
             e.printStackTrace();
         }
     }
 
-    public Server(){
+    public Server() {
         numOfGates = DEFAULT_NUMBER_OF_GATES;
         numOfSpaces = DEFAULT_NUMBER_OF_SPACES;
 
-        initVariables();
         startServer();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // TODO: Allow for variable num gates/spaces
         new Server();
     }

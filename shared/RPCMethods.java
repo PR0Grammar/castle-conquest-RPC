@@ -11,13 +11,19 @@ public class RPCMethods {
     public static final int REST = 4;
 
 
-    // Map integer to method name on the server side
+    // Map integer to method name so we can print which method is requested/invoked
     public static String getMethodName(int method){
         switch(method){
             case(END_CONNECTION):
                 return "endConnection()";
             case(GRAB_WEAPON):
                 return "grabWeapon()";
+            case(ATTACK_GATE):
+                return "attackGate()";
+            case(DEFEND_GATE):
+                return "defendGate()";
+            case(REST):
+                return "rest()";
             default:
                 return "";
         }

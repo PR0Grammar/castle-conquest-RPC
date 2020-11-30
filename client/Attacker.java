@@ -7,8 +7,8 @@ public class Attacker extends GameThread {
     private static String name = "Attacker";
     private int attackValue;
 
-    public Attacker(Socket s, int id){
-        super(s, name + "-" + id);
+    public Attacker(int id){
+        super(name + "-" + id);
     }
 
     // If response from server is ever -1, that means game has finished, and we should end connection
@@ -46,7 +46,7 @@ public class Attacker extends GameThread {
                     continue;
                 }
                 
-                // Temporary
+                //Temporary
                 gameFinished();
             }
         }
