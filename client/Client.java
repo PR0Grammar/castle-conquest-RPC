@@ -156,8 +156,6 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        // TODO: allow for args
-
         new Client();
     }
 }

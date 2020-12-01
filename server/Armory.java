@@ -7,16 +7,20 @@ public class Armory {
     private ArrayList<ClientHelper> waitingAttackers;
     private boolean isOccupied;
     private ClientHelper nextToEnter;
+    private GameStatus gameStatus;
 
-    public Armory() {
+    public Armory(GameStatus gs) {
         waitingAttackers = new ArrayList<>();
         isOccupied = false;
+        gameStatus = gs;
         nextToEnter = null;
     }
 
     // Enter armory in FIFO order
     // If occupied or others ahead waiting, then thread must wait, otherwise it can enter armory
     public synchronized void enterArmory(ClientHelper c, String clientThreadName) {
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET) return;
+        
         if (isOccupied || waitingAttackers.size() > 0) {
             // HAHA c.msg(clientThreadName + " is waiting to grab a weapon since armory full or others ahead.");
             waitingAttackers.add(c);
@@ -26,6 +30,8 @@ public class Armory {
                     wait();
                 } catch (Exception e) {
                 }
+
+                if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET) return;
             }
         }
 

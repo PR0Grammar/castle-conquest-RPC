@@ -41,6 +41,10 @@ public class Company extends Thread {
     }
 
     private void determineWinner() {
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
+        
         msg("Total Attacker Value: " + sumOfAttackers + " vs. Total Defender Value: " + sumOfDefenders);
         
         if (sumOfAttackers > sumOfDefenders) {

@@ -62,7 +62,7 @@ public class Server {
         msg("Creating EscapeRoutes...");
         escapeRoutes = new EscapeRoutes(gameStatus);
         msg("Creating Armory...");
-        armory = new Armory();
+        armory = new Armory(gameStatus);
         msg("Creating Belongings...");
         belongings = new Belongings();
         msg("Creating Castle...");

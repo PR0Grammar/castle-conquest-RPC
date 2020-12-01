@@ -112,16 +112,15 @@ public class ClientHelper extends Thread{
     // Grab weapon FIFO order for attackers
     private void grabWeapon(String clientThreadName){
         armory.enterArmory(this, clientThreadName);
-        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
-            writeToClient(-1);
-            return;
-        }
+
         int weaponVal = armory.getWeapon();
         // HAHA msg(clientThreadName + " has grabbed a weapon of value " + weaponVal);
         armory.leaveArmory(this, clientThreadName);
         
         // Let client know weapon value
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -131,6 +130,8 @@ public class ClientHelper extends Thread{
 
     private void attackGate(String attackerName, int attackerValue){
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -138,6 +139,8 @@ public class ClientHelper extends Thread{
         // Get a gate to attack
         gateCoordinator.attackerWaitForGate(this, attackerName);
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -146,6 +149,8 @@ public class ClientHelper extends Thread{
         assignedGate.put(attackerName, g);
 
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -153,6 +158,8 @@ public class ClientHelper extends Thread{
         gateCoordinator.platoonAllowNextAttacker(this, attackerName);
 
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -165,6 +172,8 @@ public class ClientHelper extends Thread{
 
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -174,6 +183,8 @@ public class ClientHelper extends Thread{
 
     private void defendGate(String defenderName, int defenderValue){
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -181,6 +192,8 @@ public class ClientHelper extends Thread{
         // Get a gate to defend
         gateCoordinator.defenderWaitForGate(this, defenderName);
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -189,6 +202,8 @@ public class ClientHelper extends Thread{
         assignedGate.put(defenderName, g);
 
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -196,6 +211,8 @@ public class ClientHelper extends Thread{
         gateCoordinator.platoonAllowNextDefender(this, defenderName);
 
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -208,6 +225,8 @@ public class ClientHelper extends Thread{
 
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -217,6 +236,8 @@ public class ClientHelper extends Thread{
 
     private void defenderLeaveGate(String defenderName){
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -229,6 +250,8 @@ public class ClientHelper extends Thread{
 
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -237,6 +260,8 @@ public class ClientHelper extends Thread{
 
     private void attackerLeaveGate(String attackerName){
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -248,6 +273,8 @@ public class ClientHelper extends Thread{
 
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -256,6 +283,8 @@ public class ClientHelper extends Thread{
 
     private void rest(String playerName){
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -270,6 +299,8 @@ public class ClientHelper extends Thread{
 
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -278,6 +309,8 @@ public class ClientHelper extends Thread{
 
     private void waitForEscapeGate(String kingName){
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -287,6 +320,8 @@ public class ClientHelper extends Thread{
 
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -295,6 +330,8 @@ public class ClientHelper extends Thread{
 
     private void packBelongings(String kingName){
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -304,6 +341,8 @@ public class ClientHelper extends Thread{
 
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -313,6 +352,8 @@ public class ClientHelper extends Thread{
     private void tryToEscape(String kingName){
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -321,6 +362,8 @@ public class ClientHelper extends Thread{
 
         // Let client know we finished
         if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            escapeRoutes.noitfyKingGameOver();
+            gateCoordinator.notifyEveryoneGameOver();
             writeToClient(-1);
             return;
         }
@@ -400,6 +443,6 @@ public class ClientHelper extends Thread{
             printError(e);
         }
 
-        // HAHA msg("has terminated.");
+        msg("has terminated.");
     }
 }

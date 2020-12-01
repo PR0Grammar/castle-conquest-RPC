@@ -194,10 +194,18 @@ public class GateCoordinator {
     }
     
     public void attackerWaitForGate(ClientHelper a, String attackerName){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
+
         Object convey = new Object();
 
         synchronized(convey){
             if(!attackerCanGrab(convey, a, attackerName)){
+                if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+                    return;
+                }
+
                 while(true){
                     try{
                         convey.wait(); 
@@ -209,10 +217,18 @@ public class GateCoordinator {
     }
 
     public void defenderWaitForGate(ClientHelper d, String defenderName){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
+
         Object convey = new Object();
 
         synchronized(convey){
             if(!defenderCanGrab(convey, d, defenderName)){
+                if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+                    return;
+                }
+
                 while(true){
                     try{
                         convey.wait(); 
@@ -221,6 +237,20 @@ public class GateCoordinator {
                     catch(Exception e){}
                 }
             }
+        }
+    }
+
+    public synchronized void notifyEveryoneGameOver(){
+        for(Object a: waitingAttackers){
+            synchronized(a){a.notifyAll();}
+        }
+
+        for(Object d: waitingDefenders){
+            synchronized(d){d.notifyAll();}
+        }
+
+        for(Gate g: gates){
+            synchronized(g){g.notifyAll();}
         }
     }
 }

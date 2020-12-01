@@ -171,14 +171,28 @@ public class Gate {
         // Since Attacker arrived here, don't let king escape if they are trying
         escapeRoutes.removeEscapeRoute(this);
         
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
+
         if(battleCanBegin()){
             c.msg(attackerName + " is last last to arrive to " + getTitle() + ". The battle can begin now. They will notify everyone.");
             notifyAll(); // Last thread notifies everyone waiting at this Gate
+            if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+                return;
+            }
             sumUpAtackersDefendersValues();
         }
         else{
+            if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+                return;
+            }
             c.msg(attackerName + " has to wait all others to arrive.");
             try{wait();}catch(Exception e){}
+        }
+
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
         }
 
         // Wait for battle results
@@ -192,16 +206,29 @@ public class Gate {
 
         c.msg(defenderName + " has arrived to " + getTitle());
 
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
+
         if(battleCanBegin()){
             c.msg(defenderName + " is last last to arrive to " + getTitle() + ". The battle can begin now. They will notify everyone.");
             notifyAll(); // Last thread notifies everyone waiting at this Gate
+            if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+                return;
+            }
             sumUpAtackersDefendersValues(); // Last thread also calculates battle results
         }
         else{
+            if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+                return;
+            }
             c.msg(defenderName + " has to wait all others to arrive.");
             try{wait();}catch(Exception e){}
         }
-
+        
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
         // Wait for battle results
         c.msg(defenderName + " is waiting for battle results...");
         try{wait();}catch(Exception e){}
