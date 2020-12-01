@@ -12,6 +12,9 @@ public class Gate {
     public final int space;
     public final int id;
     private final GateCoordinator gateCoordinator;
+    private Castle castle;
+
+    private GameStatus gameStatus;
 
     // Variables used by GateCoordinator. These variables allow for GateCoordinator
     // to assign attacker and defenders and let GateCoordinator know 
@@ -25,18 +28,24 @@ public class Gate {
     // They should be accessed only by synchronized methods in this class
     private ArrayList<String> arrivedAttackers;
     private ArrayList<String>  arrivedDefenders;
-
-    public Gate(GateCoordinator gc, int space, int id){
+    private ArrayList<Integer> attackerValues;
+    private ArrayList<Integer> defenderValues;
+    
+    public Gate(GateCoordinator gc, int space, int id, GameStatus gs, Castle c){
         this.id = id;
         assignedAttackers = 0;
         assignedDefenders = 0;
+        this.castle = c;
 
         arrivedAttackers = new ArrayList<>();
         arrivedDefenders = new ArrayList<>();
+        attackerValues = new ArrayList<>();
+        defenderValues = new ArrayList<>();
         
         isBattleReady = false;
         this.space = space;
         gateCoordinator = gc;
+        gameStatus = gs;
     }
 
     public String getTitle(){
@@ -98,15 +107,22 @@ public class Gate {
 
     // Last thread to arrive executes this
     public synchronized void sumUpAtackersDefendersValues(){
-        // TODO
-        String attackers = String.join(", ", arrivedAttackers);
-        String defenders = String.join(", ", arrivedDefenders);
+        int sumOfAttackerValue = 0;
+        int sumOfDefenderValue = 0;
 
-        System.out.println("Battle can begin at " + getTitle() + " with: " + attackers + " " + defenders);
-        
-        try{Thread.sleep(5000);}catch(Exception e){}
+        for(int a: attackerValues) sumOfAttackerValue += a;
+        for(int d: defenderValues) sumOfDefenderValue += d;
 
-        System.out.println("SUM UP A D VALUES!");
+        // Company thread will perform all battle related things for the Gate and notify threads of result
+        (new Company(
+            castle,
+            arrivedAttackers,
+            arrivedDefenders,
+            this,
+            gameStatus,
+            sumOfAttackerValue,
+            sumOfDefenderValue
+        )).start();
     }
 
     // After battle, we leave the gate
@@ -114,8 +130,14 @@ public class Gate {
         arrivedDefenders.remove(defenderName);
 
         d.msg(defenderName + " is leaving the " + getTitle());
+
         // If last thread to leave, free up Gate and let waiting threads go
+        // Also remove attacker/defender values from array
+        
         if(arrivedAttackers.size() + arrivedDefenders.size() == 0){
+            attackerValues = new ArrayList<>();
+            defenderValues = new ArrayList<>();
+
             gateCoordinator.afterBattleEnds(this);
         }
     }
@@ -128,13 +150,19 @@ public class Gate {
         a.msg(attackerName + " is leaving the " + getTitle());
 
         // If last thread to leave, free up Gate and let waiting threads go
+        // Also remove attacker/defender values from array
+
         if(arrivedAttackers.size() + arrivedDefenders.size() == 0){
+            attackerValues = new ArrayList<>();
+            defenderValues = new ArrayList<>();
+
             gateCoordinator.afterBattleEnds(this);
         }
     }
 
-    public synchronized void attack(ClientHelper c, String attackerName){
+    public synchronized void attack(ClientHelper c, String attackerName, int attackerValue){
         arrivedAttackers.add(attackerName);
+        attackerValues.add(attackerValue);
 
         c.msg(attackerName + " has arrived to " + getTitle());
 
@@ -146,12 +174,16 @@ public class Gate {
         else{
             c.msg(attackerName + " has to wait all others to arrive.");
             try{wait();}catch(Exception e){}
-            // TODO: wait for battle results
         }
+
+        // Wait for battle results
+        c.msg(attackerName + " is waiting for battle results...");
+        try{wait();}catch(Exception e){}
     }
 
-    public synchronized void defend(ClientHelper c, String defenderName){
+    public synchronized void defend(ClientHelper c, String defenderName, int defenderValue){
         arrivedDefenders.add(defenderName);
+        defenderValues.add(defenderValue);
 
         c.msg(defenderName + " has arrived to " + getTitle());
 
@@ -163,7 +195,10 @@ public class Gate {
         else{
             c.msg(defenderName + " has to wait all others to arrive.");
             try{wait();}catch(Exception e){}
-            // TODO: wait for battle results
         }
+
+        // Wait for battle results
+        c.msg(defenderName + " is waiting for battle results...");
+        try{wait();}catch(Exception e){}
     }
 }

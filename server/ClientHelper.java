@@ -39,15 +39,17 @@ public class ClientHelper extends Thread{
 
     }
     
-    // Returns an array of size 2: 
+    // Returns an array of size 3: 
     // first element is name of client thread (string)
     // second is method it wants to invoke (integer)
+    // third element is attacker/defender value (integer), but default is -1 if no value
     public Object[] readFromClient() throws IOException{
-        Object[] rtr = new Object[2];
+        Object[] rtr = new Object[3];
 
         try{
             rtr[0] = inputStream.readUTF();
             rtr[1] = inputStream.readInt();
+            rtr[2] = inputStream.readInt();
         }
         catch(Exception e){
             // If the client closes the connection before we even get to read its request
@@ -110,14 +112,14 @@ public class ClientHelper extends Thread{
         writeToClient(weaponVal);
     }
 
-    private void attackGate(String attackerName){
+    private void attackGate(String attackerName, int attackerValue){
         // Get a gate to attack
         gateCoordinator.attackerWaitForGate(this, attackerName);        
         Gate g = gateCoordinator.getGateToAttack(this, attackerName);
         gateCoordinator.platoonAllowNextAttacker(this, attackerName);
 
         // Attack it
-        g.attack(this, attackerName);
+        g.attack(this, attackerName, attackerValue);
 
         // Leave the gate after attacking
         g.attackerLeaveGate(this, attackerName);
@@ -126,14 +128,14 @@ public class ClientHelper extends Thread{
         writeToClient(1);
     }
 
-    private void defendGate(String defenderName){
+    private void defendGate(String defenderName, int defenderValue){
         // Get a gate to defend
         gateCoordinator.defenderWaitForGate(this, defenderName);
         Gate g = gateCoordinator.getGateToDefend(this, defenderName);
         gateCoordinator.platoonAllowNextDefender(this, defenderName);
 
         // Defend it
-        g.defend(this, defenderName);
+        g.defend(this, defenderName, defenderValue);
         
         // Leave the gate after defending
         g.defenderLeaveGate(this, defenderName);
@@ -163,7 +165,8 @@ public class ClientHelper extends Thread{
 
                 String threadName = (String) nextMethod[0];
                 int methodToInvoke = (int) nextMethod[1];
-
+                int attackerDefenderValue = (int) nextMethod[2];
+ 
                 // First check if it is valid, print msg for the requets
                 switch(methodToInvoke){
                     case(RPCMethods.END_CONNECTION): 
@@ -186,10 +189,10 @@ public class ClientHelper extends Thread{
                         grabWeapon(threadName);
                         break;
                     case(RPCMethods.ATTACK_GATE):
-                        attackGate(threadName);
+                        attackGate(threadName, attackerDefenderValue);
                         break;
                     case(RPCMethods.DEFEND_GATE):
-                        defendGate(threadName);
+                        defendGate(threadName, attackerDefenderValue);
                         break;
                     case(RPCMethods.REST):
                         rest(threadName);

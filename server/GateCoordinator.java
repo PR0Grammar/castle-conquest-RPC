@@ -2,8 +2,6 @@ package server;
 
 import java.util.ArrayList;
 
-import client.Client;
-
 // Monitor class to allow for mutual exclusion over Gate assingnment
 // All operations related to Gate selection and waiting should be done through this monitor
 
@@ -13,17 +11,21 @@ public class GateCoordinator {
     private ArrayList<Object> waitingDefenders;
     private boolean attackerIsGrabbing;
     private boolean defenderIsGrabbing;
+    private GameStatus gameStatus;
+    private Castle castle;
 
-    public GateCoordinator(int numOfGates, int spacePerGate){
+    public GateCoordinator(int numOfGates, int spacePerGate, GameStatus gs, Castle c){
         gates = new ArrayList<>();
         waitingAttackers = new ArrayList<>();
         waitingDefenders = new ArrayList<>();
         attackerIsGrabbing = false;
         defenderIsGrabbing = false;
+        gameStatus = gs;
+        castle = c;
 
         // Create the gates
         for(int i = 0; i < numOfGates; i++){
-            gates.add(new Gate(this, spacePerGate, i));
+            gates.add(new Gate(this, spacePerGate, i, gameStatus, castle));
         }
     }
 
@@ -159,7 +161,7 @@ public class GateCoordinator {
     private synchronized boolean attackerCanGrab(Object convey, ClientHelper a, String attackerName){
         if(!attackerIsGrabbing &&  waitingAttackers.size() == 0 && gateAvailableForAttacker()){
             attackerIsGrabbing = true;
-            a.msg(attackerName + " is grabbing a gate.");
+            a.msg(attackerName + " is grabbing a gate since no one is waiting/grabbing one and gate is available.");
 
             return true;
         }
@@ -173,7 +175,7 @@ public class GateCoordinator {
     private synchronized boolean defenderCanGrab(Object convey, ClientHelper d, String defenderName){
         if(!defenderIsGrabbing && waitingDefenders.size() == 0 && gateAvailableForDefender()){
             defenderIsGrabbing = true;
-            d.msg(defenderName + " is grabbing a gate.");
+            d.msg(defenderName + " is grabbing a gate since no one is waiting/grabbing one and gate is available.");
             
             return true;
         }

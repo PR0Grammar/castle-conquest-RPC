@@ -30,7 +30,7 @@ public class Defender extends GameThread {
         try{
             while(!gameFinished){
                 // Defend a gate (includes choosing, waiting, battling)
-                requestServerRPC(RPCMethods.DEFEND_GATE);
+                requestServerRPC(RPCMethods.DEFEND_GATE, defendValue);
                 res = serverResponse();
 
                 if(res == -1){
@@ -39,7 +39,7 @@ public class Defender extends GameThread {
                 }
 
                 // Rest after a battle
-                requestServerRPC(RPCMethods.REST);
+                requestServerRPC(RPCMethods.REST, -1);
                 res = serverResponse();
 
                 if(res == -1){

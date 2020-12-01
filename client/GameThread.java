@@ -48,10 +48,13 @@ public class GameThread extends Thread {
     // Write to the server
     // First write is for thread name
     // Second write is method to invoke
-    public void requestServerRPC(int methodNumber) throws IOException {
+    // Third is attacker/defender value. This should be -1 if no parameter
+
+    public void requestServerRPC(int methodNumber, int attackerDefenderValue) throws IOException {
         msg("requesting server to invoke " + RPCMethods.getMethodName(methodNumber));
         outputStream.writeUTF(getName());
         outputStream.writeInt(methodNumber);
+        outputStream.writeInt(attackerDefenderValue);
     }
 
     // Read response from server
@@ -73,7 +76,7 @@ public class GameThread extends Thread {
 
     public void gameFinished() throws IOException{
         gameFinished = true;
-        requestServerRPC(RPCMethods.END_CONNECTION);
+        requestServerRPC(RPCMethods.END_CONNECTION, -1);
         closeConnections();
     }
 }

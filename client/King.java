@@ -14,10 +14,8 @@ public class King extends GameThread{
         msg("has been created.");
         
         try{
-            while(true){
-                requestServerRPC(RPCMethods.END_CONNECTION);
-                closeConnections();
-                break;
+            while(!gameFinished){
+                gameFinished();
             }
         }
         catch(Exception e){

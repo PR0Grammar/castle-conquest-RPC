@@ -19,6 +19,7 @@ public class Server {
     private Armory armory;
     private GateCoordinator gateCoordinator;
     private Castle castle;
+    private GameStatus gameStatus;
 
     public void getInitialDataFromClient() {
         msg("Waiting for client to send num of gates, spaces, and castle health...");
@@ -59,8 +60,10 @@ public class Server {
         armory = new Armory();
         msg("Creating Castle...");
         castle = new Castle(totalCastleHealth);
+        msg("Creating GameStatus...");
+        gameStatus = new GameStatus();
         msg("Creating GateCoordinator...");
-        gateCoordinator = new GateCoordinator(numOfGates, numOfSpaces);
+        gateCoordinator = new GateCoordinator(numOfGates, numOfSpaces, gameStatus, castle);
     }
 
     public void startServer() {

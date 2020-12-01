@@ -18,7 +18,7 @@ public class Attacker extends GameThread {
 
         try{
             // Get weapon from armory
-            requestServerRPC(RPCMethods.GRAB_WEAPON);
+            requestServerRPC(RPCMethods.GRAB_WEAPON, -1);
             res = serverResponse();
             
             if(res == -1) gameFinished();
@@ -29,7 +29,7 @@ public class Attacker extends GameThread {
 
             while(!gameFinished){
                 // Attack a gate (includes choosing, waiting, battling)
-                requestServerRPC(RPCMethods.ATTACK_GATE);
+                requestServerRPC(RPCMethods.ATTACK_GATE, attackValue);
                 res = serverResponse();
 
                 if(res == -1){
@@ -38,7 +38,7 @@ public class Attacker extends GameThread {
                 }
 
                 // Rest after a battle
-                requestServerRPC(RPCMethods.REST);
+                requestServerRPC(RPCMethods.REST, -1);
                 res = serverResponse();
 
                 if(res == -1){
