@@ -20,6 +20,7 @@ public class Server {
     private GateCoordinator gateCoordinator;
     private Castle castle;
     private GameStatus gameStatus;
+    private Belongings belongings;
 
     public void getInitialDataFromClient() {
         msg("Waiting for client to send num of gates, spaces, and castle health...");
@@ -58,6 +59,8 @@ public class Server {
     public void initVariables() {
         msg("Creating Armory...");
         armory = new Armory();
+        msg("Creating Belongings...");
+        belongings = new Belongings();
         msg("Creating Castle...");
         castle = new Castle(totalCastleHealth);
         msg("Creating GameStatus...");
@@ -82,7 +85,7 @@ public class Server {
             while (true) {
                 Socket s = server.accept();
                 // HAHA msg("connected to new client. Creating ClientHelper thread with id = " + clientHelperCounter);
-                (new ClientHelper(s, clientHelperCounter++, armory, gateCoordinator, castle)).start();
+                (new ClientHelper(s, clientHelperCounter++, armory, gateCoordinator, castle, belongings)).start();
             }
         } catch (Exception e) {
             System.out.println("Server error: " + e);

@@ -1,4 +1,3 @@
-- add code for castle damage 
 - add code for escape Gate / King logic
 - add game status update logic
     - add game finished checks everywhere

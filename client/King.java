@@ -13,9 +13,35 @@ public class King extends GameThread{
     public void run(){
         msg("has been created.");
         
+        int res;
         try{
             while(!gameFinished){
-                gameFinished();
+                // Wait for gate to open up for escaping
+                requestServerRPC(RPCMethods.WAIT_FOR_ESCAPE_GATE, -1);
+                res = serverResponse();
+
+                if(res == -1){
+                    gameFinished();
+                    continue;
+                }
+
+                // Packing belongings
+                requestServerRPC(RPCMethods.PACK_BELONGINGS, -1);
+                res = serverResponse();
+
+                if(res == -1){
+                    gameFinished();
+                    continue;
+                }
+
+                // Try to escape
+                requestServerRPC(RPCMethods.TRY_TO_ESCAPE, -1);
+                res = serverResponse();
+
+                if(res == -1){
+                    gameFinished();
+                    continue;
+                }
             }
         }
         catch(Exception e){

@@ -20,15 +20,16 @@ public class ClientHelper extends Thread{
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
     private boolean connected;
+    private Belongings belongings;
 
-    public ClientHelper(Socket s, int id, Armory a, GateCoordinator gc, Castle c){
+    public ClientHelper(Socket s, int id, Armory a, GateCoordinator gc, Castle c, Belongings b){
         connection = s;
-
         try{
             connected = true;
             castle = c;
             gateCoordinator = gc;
             armory = a;
+            belongings = b;
             inputStream = new DataInputStream(s.getInputStream());
             outputStream = new DataOutputStream(s.getOutputStream());
             setName(name + "-" + id);
@@ -148,10 +149,31 @@ public class ClientHelper extends Thread{
         msg(playerName + " is resting before the next battle");
 
         //TODO
-        try{Thread.sleep(4000);}catch(Exception e){}
+        try{Thread.sleep(6000);}catch(Exception e){}
 
         // Let client know we finished
         writeToClient(1);
+    }
+
+    private void waitForEscapeGate(String kingName){
+        //TODO
+
+        // Let client know we finished
+        writeToClient(1);
+    }
+
+    private void packBelongings(String kingName){
+        belongings.pack();
+
+        // Let client know we finished
+        writeToClient(1);       
+    }
+
+    private void tryToEscape(String kingName){
+        //TODO
+
+        // Let client know we finished
+        writeToClient(1);       
     }
     
     public void run(){
@@ -174,6 +196,9 @@ public class ClientHelper extends Thread{
                     case(RPCMethods.ATTACK_GATE):
                     case(RPCMethods.DEFEND_GATE):
                     case(RPCMethods.REST):
+                    case(RPCMethods.WAIT_FOR_ESCAPE_GATE):
+                    case(RPCMethods.PACK_BELONGINGS):
+                    case(RPCMethods.TRY_TO_ESCAPE):
                         // HAHA msg(threadName + " has asked to execute " + RPCMethods.getMethodName(methodToInvoke) + ". Executing...");
                         break;
                     default:
@@ -196,6 +221,15 @@ public class ClientHelper extends Thread{
                         break;
                     case(RPCMethods.REST):
                         rest(threadName);
+                        break;
+                    case(RPCMethods.WAIT_FOR_ESCAPE_GATE):
+                        waitForEscapeGate(threadName);
+                        break;
+                    case(RPCMethods.PACK_BELONGINGS):
+                        packBelongings(threadName);
+                        break;
+                    case(RPCMethods.TRY_TO_ESCAPE):
+                        tryToEscape(threadName);
                         break;
                     default:
                         break;
