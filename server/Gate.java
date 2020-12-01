@@ -13,8 +13,8 @@ public class Gate {
     public final int id;
     private final GateCoordinator gateCoordinator;
     private Castle castle;
-
     private GameStatus gameStatus;
+    private EscapeRoutes escapeRoutes;
 
     // Variables used by GateCoordinator. These variables allow for GateCoordinator
     // to assign attacker and defenders and let GateCoordinator know 
@@ -31,7 +31,7 @@ public class Gate {
     private ArrayList<Integer> attackerValues;
     private ArrayList<Integer> defenderValues;
     
-    public Gate(GateCoordinator gc, int space, int id, GameStatus gs, Castle c){
+    public Gate(GateCoordinator gc, int space, int id, GameStatus gs, Castle c, EscapeRoutes er){
         this.id = id;
         assignedAttackers = 0;
         assignedDefenders = 0;
@@ -41,6 +41,7 @@ public class Gate {
         arrivedDefenders = new ArrayList<>();
         attackerValues = new ArrayList<>();
         defenderValues = new ArrayList<>();
+        escapeRoutes = er;
         
         isBattleReady = false;
         this.space = space;
@@ -121,7 +122,8 @@ public class Gate {
             this,
             gameStatus,
             sumOfAttackerValue,
-            sumOfDefenderValue
+            sumOfDefenderValue,
+            escapeRoutes
         )).start();
     }
 
@@ -166,6 +168,9 @@ public class Gate {
 
         c.msg(attackerName + " has arrived to " + getTitle());
 
+        // Since Attacker arrived here, don't let king escape
+        escapeRoutes.removeEscapeRoute(this);
+        
         if(battleCanBegin()){
             c.msg(attackerName + " is last last to arrive to " + getTitle() + ". The battle can begin now. They will notify everyone.");
             notifyAll(); // Last thread notifies everyone waiting at this Gate

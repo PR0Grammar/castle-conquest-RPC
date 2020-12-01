@@ -14,7 +14,7 @@ public class GateCoordinator {
     private GameStatus gameStatus;
     private Castle castle;
 
-    public GateCoordinator(int numOfGates, int spacePerGate, GameStatus gs, Castle c){
+    public GateCoordinator(int numOfGates, int spacePerGate, GameStatus gs, Castle c, EscapeRoutes er){
         gates = new ArrayList<>();
         waitingAttackers = new ArrayList<>();
         waitingDefenders = new ArrayList<>();
@@ -25,7 +25,7 @@ public class GateCoordinator {
 
         // Create the gates
         for(int i = 0; i < numOfGates; i++){
-            gates.add(new Gate(this, spacePerGate, i, gameStatus, castle));
+            gates.add(new Gate(this, spacePerGate, i, gameStatus, castle, er));
         }
     }
 
@@ -34,7 +34,7 @@ public class GateCoordinator {
         // signal the next waiting attacker to go.
 
         if(waitingAttackers.size() > 0 && gateAvailableForAttacker()){
-            c.msg(attackerName + " is signaling next waiting attacker to go.");
+            // HAHA c.msg(attackerName + " is signaling next waiting attacker to go.");
 
             Object o = waitingAttackers.remove(0);
             synchronized(o){
@@ -52,7 +52,7 @@ public class GateCoordinator {
         // signal the next waiting defender to go.
 
         if(waitingDefenders.size() > 0 && gateAvailableForDefender()){
-            c.msg(defenderName + " is signaling next waiting defender to go.");
+            // HAHA c.msg(defenderName + " is signaling next waiting defender to go.");
             Object o = waitingDefenders.remove(0);
             synchronized(o){
                 o.notify();
@@ -77,7 +77,7 @@ public class GateCoordinator {
         }
 
         leastAttacked.assignAttacker();
-        c.msg(attackerName + " has been assigned to attack " + leastAttacked.getTitle() + ". They are headed there now");
+        // HAHA c.msg(attackerName + " has been assigned to attack " + leastAttacked.getTitle() + ". They are headed there now");
         return leastAttacked;
     }
 
@@ -94,7 +94,7 @@ public class GateCoordinator {
         }
 
         leastDefended.assignDefender();
-        c.msg(defenderName + " has been assigned to defend " + leastDefended.getTitle() + ". They are headed there now");
+        // HAHA c.msg(defenderName + " has been assigned to defend " + leastDefended.getTitle() + ". They are headed there now");
         return leastDefended;
     }
 
@@ -161,12 +161,12 @@ public class GateCoordinator {
     private synchronized boolean attackerCanGrab(Object convey, ClientHelper a, String attackerName){
         if(!attackerIsGrabbing &&  waitingAttackers.size() == 0 && gateAvailableForAttacker()){
             attackerIsGrabbing = true;
-            a.msg(attackerName + " is grabbing a gate since no one is waiting/grabbing one and gate is available.");
+            // HAHA a.msg(attackerName + " is grabbing a gate since no one is waiting/grabbing one and gate is available.");
 
             return true;
         }
         else{
-            a.msg(attackerName + " has to wait for a gate since others ahead/grabbing, or no gate available");
+            // HAHA a.msg(attackerName + " has to wait for a gate since others ahead/grabbing, or no gate available");
             waitingAttackers.add(convey);
             return false;
         }
@@ -175,12 +175,12 @@ public class GateCoordinator {
     private synchronized boolean defenderCanGrab(Object convey, ClientHelper d, String defenderName){
         if(!defenderIsGrabbing && waitingDefenders.size() == 0 && gateAvailableForDefender()){
             defenderIsGrabbing = true;
-            d.msg(defenderName + " is grabbing a gate since no one is waiting/grabbing one and gate is available.");
+            // HAHA d.msg(defenderName + " is grabbing a gate since no one is waiting/grabbing one and gate is available.");
             
             return true;
         }
         else{
-            d.msg(defenderName + " has to wait for a gate since others ahead/grabbing, or no gate available");
+            // HAHA d.msg(defenderName + " has to wait for a gate since others ahead/grabbing, or no gate available");
             waitingDefenders.add(convey);
             return false;
         }

@@ -13,8 +13,17 @@ public class Company extends Thread {
     private ArrayList<String> defenders;
     private Gate gate;
     private Castle castle;
+    private EscapeRoutes escapeRoutes;
 
-    public Company(Castle c, ArrayList<String> attackers, ArrayList<String> defenders, Gate g, GameStatus gameStatus, int sumOfAttackers, int sumOfDefenders) {
+    public Company(Castle c, 
+                   ArrayList<String> attackers, 
+                   ArrayList<String> defenders, 
+                   Gate g, GameStatus 
+                   gameStatus, 
+                   int sumOfAttackers, 
+                   int sumOfDefenders,
+                   EscapeRoutes er
+                   ) {
         this.gameStatus = gameStatus;
         this.sumOfAttackers = sumOfAttackers;
         this.sumOfDefenders = sumOfDefenders;
@@ -22,6 +31,7 @@ public class Company extends Thread {
         this.defenders = defenders;
         this.gate = g;
         this.castle = c;
+        escapeRoutes = er;
 
         setName(name + '-' + g.getTitle() + '-' + System.currentTimeMillis());
     }
@@ -41,7 +51,8 @@ public class Company extends Thread {
             // TODO Game Check
         } else if (sumOfAttackers < sumOfDefenders) {
             msg("Defenders win the battle! We will let the King know " + gate.getTitle() + " is open to escape.");
-            // TODO King escape route + Game Check
+            // TODO Game Check
+            escapeRoutes.addEscapeRoute(gate);
         } else {
             msg("It's a tie! Nothing will take place.");
         }

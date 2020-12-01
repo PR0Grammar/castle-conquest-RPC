@@ -2,7 +2,6 @@ package server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -21,6 +20,7 @@ public class Server {
     private Castle castle;
     private GameStatus gameStatus;
     private Belongings belongings;
+    private EscapeRoutes escapeRoutes;
 
     public void getInitialDataFromClient() {
         msg("Waiting for client to send num of gates, spaces, and castle health...");
@@ -57,16 +57,18 @@ public class Server {
 
     // Initialize Gates, GateCoordinator, Castle
     public void initVariables() {
+        msg("Creating GameStatus...");
+        gameStatus = new GameStatus();
+        msg("Creating EscapeRoutes...");
+        escapeRoutes = new EscapeRoutes(gameStatus);
         msg("Creating Armory...");
         armory = new Armory();
         msg("Creating Belongings...");
         belongings = new Belongings();
         msg("Creating Castle...");
         castle = new Castle(totalCastleHealth);
-        msg("Creating GameStatus...");
-        gameStatus = new GameStatus();
         msg("Creating GateCoordinator...");
-        gateCoordinator = new GateCoordinator(numOfGates, numOfSpaces, gameStatus, castle);
+        gateCoordinator = new GateCoordinator(numOfGates, numOfSpaces, gameStatus, castle, escapeRoutes);
     }
 
     public void startServer() {
@@ -85,7 +87,7 @@ public class Server {
             while (true) {
                 Socket s = server.accept();
                 // HAHA msg("connected to new client. Creating ClientHelper thread with id = " + clientHelperCounter);
-                (new ClientHelper(s, clientHelperCounter++, armory, gateCoordinator, castle, belongings)).start();
+                (new ClientHelper(s, clientHelperCounter++, armory, gateCoordinator, castle, belongings, escapeRoutes)).start();
             }
         } catch (Exception e) {
             System.out.println("Server error: " + e);

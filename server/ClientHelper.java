@@ -21,8 +21,9 @@ public class ClientHelper extends Thread{
     private DataOutputStream outputStream;
     private boolean connected;
     private Belongings belongings;
+    private EscapeRoutes escapeRoutes;
 
-    public ClientHelper(Socket s, int id, Armory a, GateCoordinator gc, Castle c, Belongings b){
+    public ClientHelper(Socket s, int id, Armory a, GateCoordinator gc, Castle c, Belongings b, EscapeRoutes er){
         connection = s;
         try{
             connected = true;
@@ -30,6 +31,7 @@ public class ClientHelper extends Thread{
             gateCoordinator = gc;
             armory = a;
             belongings = b;
+            escapeRoutes = er;
             inputStream = new DataInputStream(s.getInputStream());
             outputStream = new DataOutputStream(s.getOutputStream());
             setName(name + "-" + id);
@@ -156,13 +158,15 @@ public class ClientHelper extends Thread{
     }
 
     private void waitForEscapeGate(String kingName){
-        //TODO
+        // Wait for escape route
+        escapeRoutes.waitForEscapeRoute(this, kingName);
 
         // Let client know we finished
         writeToClient(1);
     }
 
     private void packBelongings(String kingName){
+        msg(kingName + " is packing his belongings...");
         belongings.pack();
 
         // Let client know we finished
@@ -170,7 +174,7 @@ public class ClientHelper extends Thread{
     }
 
     private void tryToEscape(String kingName){
-        //TODO
+        escapeRoutes.tryToEscape(this, kingName);
 
         // Let client know we finished
         writeToClient(1);       
