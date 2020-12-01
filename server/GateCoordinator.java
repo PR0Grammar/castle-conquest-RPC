@@ -32,6 +32,9 @@ public class GateCoordinator {
     public synchronized void platoonAllowNextAttacker(ClientHelper c, String attackerName){
         // If others are waiting to go, and there is a gate available to attack
         // signal the next waiting attacker to go.
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
 
         if(waitingAttackers.size() > 0 && gateAvailableForAttacker()){
             // HAHA c.msg(attackerName + " is signaling next waiting attacker to go.");
@@ -50,6 +53,9 @@ public class GateCoordinator {
     public synchronized void platoonAllowNextDefender(ClientHelper c, String defenderName){
         // If others are waiting to go, and there is a gate available to defend
         // signal the next waiting defender to go.
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
 
         if(waitingDefenders.size() > 0 && gateAvailableForDefender()){
             // HAHA c.msg(defenderName + " is signaling next waiting defender to go.");
@@ -65,6 +71,7 @@ public class GateCoordinator {
     }
 
     public synchronized Gate getGateToAttack(ClientHelper c, String attackerName){
+        
         Gate leastAttacked = null;
         int numOfAttackersAtGate = Integer.MAX_VALUE;
 

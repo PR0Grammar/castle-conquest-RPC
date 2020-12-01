@@ -168,7 +168,7 @@ public class Gate {
 
         c.msg(attackerName + " has arrived to " + getTitle());
 
-        // Since Attacker arrived here, don't let king escape
+        // Since Attacker arrived here, don't let king escape if they are trying
         escapeRoutes.removeEscapeRoute(this);
         
         if(battleCanBegin()){

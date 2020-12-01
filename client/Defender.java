@@ -38,6 +38,15 @@ public class Defender extends GameThread {
                     continue;
                 }
 
+                // Leave gate after battle
+                requestServerRPC(RPCMethods.DEFENDER_LEAVE_GATE, -1);
+                res = serverResponse();
+
+                if(res == -1){
+                    gameFinished();
+                    continue;
+                }
+
                 // Rest after a battle
                 requestServerRPC(RPCMethods.REST, -1);
                 res = serverResponse();

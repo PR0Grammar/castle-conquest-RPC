@@ -1,2 +1,5 @@
 - add game status update logic
-    - add game finished checks everywhere
+
+- add game finished checks everywhere
+
+- MAKE SURE TO UNCOMMENT HAHAs

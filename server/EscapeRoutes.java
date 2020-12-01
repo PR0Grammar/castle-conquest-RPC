@@ -44,8 +44,10 @@ public class EscapeRoutes {
     // Try to escape after packing belongings
     public synchronized void tryToEscape(ClientHelper c,  String kingName){
         if(escapeRoutes.indexOf(currentEscapeRoute) != -1){
-            // TODO: GameStatus Update
-            c.msg(kingName + " has escaped through " + currentEscapeRoute.getTitle() +". DEFENDERS WIN!!!");
+            gameStatus.setStatus(GameStatus.DEFENDERS_WIN);
+            if(gameStatus.getGameStatus() == GameStatus.DEFENDERS_WIN){
+                c.msg(kingName + " has escaped through " + currentEscapeRoute.getTitle());
+            }
         }   
         else{
             c.msg(kingName + " couldn't escape since an Attacker arrived at "+ 

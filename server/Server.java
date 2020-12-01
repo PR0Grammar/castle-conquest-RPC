@@ -87,7 +87,7 @@ public class Server {
             while (true) {
                 Socket s = server.accept();
                 // HAHA msg("connected to new client. Creating ClientHelper thread with id = " + clientHelperCounter);
-                (new ClientHelper(s, clientHelperCounter++, armory, gateCoordinator, castle, belongings, escapeRoutes)).start();
+                (new ClientHelper(s, clientHelperCounter++, armory, gateCoordinator, belongings, escapeRoutes, gameStatus)).start();
             }
         } catch (Exception e) {
             System.out.println("Server error: " + e);

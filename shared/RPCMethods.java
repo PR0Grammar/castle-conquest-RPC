@@ -12,6 +12,8 @@ public class RPCMethods {
     public static final int WAIT_FOR_ESCAPE_GATE = 5;
     public static final int PACK_BELONGINGS = 6;
     public static final int TRY_TO_ESCAPE = 7;
+    public static final int DEFENDER_LEAVE_GATE = 8;
+    public static final int ATTACKER_LEAVE_GATE = 9;
 
 
     // Map integer to method name so we can print which method is requested/invoked
@@ -33,6 +35,10 @@ public class RPCMethods {
                 return "packBelongings()";
             case(TRY_TO_ESCAPE):
                 return "tryToEscape()";
+            case(DEFENDER_LEAVE_GATE):
+                return "defenderLeaveGate()";
+            case(ATTACKER_LEAVE_GATE):
+                return "attackerLeaveGate()";
             default:
                 return "";
         }

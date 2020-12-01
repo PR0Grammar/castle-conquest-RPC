@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
 
 import shared.RPCMethods;
 
@@ -13,7 +14,7 @@ public class ClientHelper extends Thread{
     public static long time = System.currentTimeMillis();
     
     private Armory armory;
-    private Castle castle;
+    private GameStatus gameStatus;
     private GateCoordinator gateCoordinator;
 
     private Socket connection;
@@ -22,16 +23,19 @@ public class ClientHelper extends Thread{
     private boolean connected;
     private Belongings belongings;
     private EscapeRoutes escapeRoutes;
+    // Keep track of the assigned for attackers/defenders, for other methods invoked
+    private HashMap<String, Gate> assignedGate; 
 
-    public ClientHelper(Socket s, int id, Armory a, GateCoordinator gc, Castle c, Belongings b, EscapeRoutes er){
+    public ClientHelper(Socket s, int id, Armory a, GateCoordinator gc, Belongings b, EscapeRoutes er, GameStatus gs){
         connection = s;
         try{
             connected = true;
-            castle = c;
             gateCoordinator = gc;
             armory = a;
             belongings = b;
             escapeRoutes = er;
+            gameStatus = gs;
+            assignedGate = new HashMap<>();
             inputStream = new DataInputStream(s.getInputStream());
             outputStream = new DataOutputStream(s.getOutputStream());
             setName(name + "-" + id);
@@ -108,76 +112,220 @@ public class ClientHelper extends Thread{
     // Grab weapon FIFO order for attackers
     private void grabWeapon(String clientThreadName){
         armory.enterArmory(this, clientThreadName);
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
         int weaponVal = armory.getWeapon();
         // HAHA msg(clientThreadName + " has grabbed a weapon of value " + weaponVal);
         armory.leaveArmory(this, clientThreadName);
         
+        // Let client know weapon value
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         writeToClient(weaponVal);
     }
 
     private void attackGate(String attackerName, int attackerValue){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         // Get a gate to attack
-        gateCoordinator.attackerWaitForGate(this, attackerName);        
+        gateCoordinator.attackerWaitForGate(this, attackerName);
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         Gate g = gateCoordinator.getGateToAttack(this, attackerName);
+        assignedGate.put(attackerName, g);
+
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         gateCoordinator.platoonAllowNextAttacker(this, attackerName);
+
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
+        // Simulate "walking to" gate: 2-5s (gives King a chance)
+        try{Thread.sleep((int) Math.ceil(Math.random() * 3000) + 2000);} catch(Exception e){}
 
         // Attack it
         g.attack(this, attackerName, attackerValue);
 
-        // Leave the gate after attacking
-        g.attackerLeaveGate(this, attackerName);
-
         // Let client know we finished
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         writeToClient(1);
     }
 
     private void defendGate(String defenderName, int defenderValue){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         // Get a gate to defend
         gateCoordinator.defenderWaitForGate(this, defenderName);
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         Gate g = gateCoordinator.getGateToDefend(this, defenderName);
+        assignedGate.put(defenderName, g);
+
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         gateCoordinator.platoonAllowNextDefender(this, defenderName);
+
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
+        // Simulate "walking to" gate: 2-5s
+        try{Thread.sleep((int) Math.ceil(Math.random() * 3000) + 2000);} catch(Exception e){}
 
         // Defend it
         g.defend(this, defenderName, defenderValue);
+
+        // Let client know we finished
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
         
+        writeToClient(1);
+    }
+
+    private void defenderLeaveGate(String defenderName){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         // Leave the gate after defending
+        Gate g = assignedGate.get(defenderName);
+        assignedGate.remove(defenderName);
+
         g.defenderLeaveGate(this, defenderName);
 
         // Let client know we finished
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+        writeToClient(1);  
+    }
+
+    private void attackerLeaveGate(String attackerName){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+        // Leave the gate after attacking
+        Gate g = assignedGate.get(attackerName);
+        assignedGate.remove(attackerName);
+
+        g.attackerLeaveGate(this, attackerName);
+
+        // Let client know we finished
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
         writeToClient(1);
     }
 
     private void rest(String playerName){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         msg(playerName + " is resting before the next battle");
 
-        //TODO
-        try{Thread.sleep(6000);}catch(Exception e){}
+        // Attackers/Defenders rest the same amount: between 6-7 seconds, 
+        // which is at least 2x of king packing time
+        try{
+            Thread.sleep((int) Math.ceil(Math.random() * 1000) + 6000);
+        }catch(Exception e){}
 
         // Let client know we finished
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
         writeToClient(1);
     }
 
     private void waitForEscapeGate(String kingName){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+        
         // Wait for escape route
         escapeRoutes.waitForEscapeRoute(this, kingName);
 
         // Let client know we finished
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
         writeToClient(1);
     }
 
     private void packBelongings(String kingName){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+
         msg(kingName + " is packing his belongings...");
         belongings.pack();
 
         // Let client know we finished
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
         writeToClient(1);       
     }
 
     private void tryToEscape(String kingName){
+        // Let client know we finished
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+ 
         escapeRoutes.tryToEscape(this, kingName);
 
         // Let client know we finished
-        writeToClient(1);       
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            writeToClient(-1);
+            return;
+        }
+    
+        writeToClient(1);        
     }
     
     public void run(){
@@ -203,6 +351,8 @@ public class ClientHelper extends Thread{
                     case(RPCMethods.WAIT_FOR_ESCAPE_GATE):
                     case(RPCMethods.PACK_BELONGINGS):
                     case(RPCMethods.TRY_TO_ESCAPE):
+                    case(RPCMethods.ATTACKER_LEAVE_GATE):
+                    case(RPCMethods.DEFENDER_LEAVE_GATE):
                         // HAHA msg(threadName + " has asked to execute " + RPCMethods.getMethodName(methodToInvoke) + ". Executing...");
                         break;
                     default:
@@ -234,6 +384,12 @@ public class ClientHelper extends Thread{
                         break;
                     case(RPCMethods.TRY_TO_ESCAPE):
                         tryToEscape(threadName);
+                        break;
+                    case(RPCMethods.ATTACKER_LEAVE_GATE):
+                        attackerLeaveGate(threadName);
+                        break;
+                    case(RPCMethods.DEFENDER_LEAVE_GATE):
+                        defenderLeaveGate(threadName);
                         break;
                     default:
                         break;

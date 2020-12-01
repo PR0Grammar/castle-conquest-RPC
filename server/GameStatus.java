@@ -12,7 +12,28 @@ public class GameStatus {
         return status;
     }
 
+    // Can only be set once
     public synchronized void setStatus(int s){
-        status = s;
+        if(status != NO_WINNER_YET){
+            if(s == DEFENDERS_WIN){
+                System.out.println("+++++");
+                System.out.println("+++++");
+                System.out.println("+++++");
+                System.out.println("DEFENDERS WIN!");
+                System.out.println("+++++");
+                System.out.println("+++++");
+                System.out.println("+++++");
+            }
+            else if(s == ATTACKERS_WIN){
+                System.out.println("+++++");
+                System.out.println("+++++");
+                System.out.println("+++++");
+                System.out.println("ATTACKERS WIN!");
+                System.out.println("+++++");
+                System.out.println("+++++");
+                System.out.println("+++++");
+            }
+            status = s;
+        }
     }
 }

@@ -48,7 +48,10 @@ public class Company extends Thread {
                 sumOfAttackers + 
                 " damage. Castle health is now " + 
                 castle.takeDamage(sumOfAttackers));
-            // TODO Game Check
+            
+            if(castle.getHealth() <= 0){
+                gameStatus.setStatus(GameStatus.ATTACKERS_WIN);
+            }
         } else if (sumOfAttackers < sumOfDefenders) {
             msg("Defenders win the battle! We will let the King know " + gate.getTitle() + " is open to escape.");
             // TODO Game Check
@@ -67,6 +70,10 @@ public class Company extends Thread {
     }
 
     private void notifyThreadsWaitingOnResult(){
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
+        
         msg("Notifying all threads in this company for battle results");
         synchronized(gate){
             gate.notifyAll();
@@ -74,6 +81,10 @@ public class Company extends Thread {
     }
 
     public void run() {
+        if(gameStatus.getGameStatus() != GameStatus.NO_WINNER_YET){
+            return;
+        }
+        
         msg("BATTLE HAS BEGUN!!!\n     Attackers: " + String.join(",", attackers) + "\n     Defenders: " + String.join(",", defenders));
 
         simulateBattleTime();
