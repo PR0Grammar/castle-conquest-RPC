@@ -1,0 +1,698 @@
+///////// Server Output
+
+[Server]: has started. Listening on port 3000
+[Server]: Waiting for client to send num of gates, spaces, and castle health...
+[Server]: Connected to client.
+[Server]: Received num of gates: 2
+[Server]: Received num of spaces per gate: 3
+[Server]: Received total castle heatlh: 52
+[Server]: Replying to client to let them know we got the data
+[Server]: Creating GameStatus...
+[Server]: Creating EscapeRoutes...
+[Server]: Creating Armory...
+[Server]: Creating Belongings...
+[Server]: Creating Castle...
+[Server]: Creating GateCoordinator...
+[Server]: Ready to clients...
+[Server]: connected to new client. Creating ClientHelper thread with id = 0
+[Server]: connected to new client. Creating ClientHelper thread with id = 1
+[Server]: connected to new client. Creating ClientHelper thread with id = 2
+[Server]: connected to new client. Creating ClientHelper thread with id = 3
+[Server]: connected to new client. Creating ClientHelper thread with id = 4
+[Server]: connected to new client. Creating ClientHelper thread with id = 5
+[Server]: connected to new client. Creating ClientHelper thread with id = 6
+[Server]: connected to new client. Creating ClientHelper thread with id = 7
+[Server]: connected to new client. Creating ClientHelper thread with id = 8
+[Server]: connected to new client. Creating ClientHelper thread with id = 9
+[Server]: connected to new client. Creating ClientHelper thread with id = 10
+[Server]: connected to new client. Creating ClientHelper thread with id = 11
+[Server]: connected to new client. Creating ClientHelper thread with id = 12
+[Server]: connected to new client. Creating ClientHelper thread with id = 13
+[Server]: connected to new client. Creating ClientHelper thread with id = 14
+[Server]: connected to new client. Creating ClientHelper thread with id = 15
+[Server]: connected to new client. Creating ClientHelper thread with id = 16
+[Server]: connected to new client. Creating ClientHelper thread with id = 17
+[Server]: connected to new client. Creating ClientHelper thread with id = 18
+[Server]: connected to new client. Creating ClientHelper thread with id = 19
+[Server]: connected to new client. Creating ClientHelper thread with id = 20
+[35] ClientHelper-12: has started.
+[20] ClientHelper-5: has started.
+[18] ClientHelper-0: has started.
+[34] ClientHelper-11: has started.
+[21] ClientHelper-6: has started.
+[19] ClientHelper-1: has started.
+[22] ClientHelper-7: has started.
+[36] ClientHelper-15: has started.
+[38] ClientHelper-17: has started.
+[40] ClientHelper-18: has started.
+[19] ClientHelper-2: has started.
+[20] ClientHelper-4: has started.
+[37] ClientHelper-16: has started.
+[34] ClientHelper-10: has started.
+[44] ClientHelper-19: has started.
+[23] ClientHelper-8: has started.
+[32] ClientHelper-9: has started.
+[21] ClientHelper-3: has started.
+[44] ClientHelper-20: has started.
+[133] ClientHelper-11: Defender-1 has asked to execute defendGate(). Executing...
+[133] ClientHelper-5: Attacker-5 has asked to execute grabWeapon(). Executing...
+[133] ClientHelper-6: Attacker-6 has asked to execute grabWeapon(). Executing...
+[136] ClientHelper-0: Attacker-0 has asked to execute grabWeapon(). Executing...
+[136] ClientHelper-16: Defender-6 has asked to execute defendGate(). Executing...
+[135] ClientHelper-19: Defender-9 has asked to execute defendGate(). Executing...
+[135] ClientHelper-8: Attacker-8 has asked to execute grabWeapon(). Executing...
+[135] ClientHelper-17: Defender-7 has asked to execute defendGate(). Executing...
+[135] ClientHelper-4: Attacker-4 has asked to execute grabWeapon(). Executing...
+[135] ClientHelper-15: Defender-5 has asked to execute defendGate(). Executing...
+[135] ClientHelper-2: Attacker-2 has asked to execute grabWeapon(). Executing...
+[135] ClientHelper-7: Attacker-7 has asked to execute grabWeapon(). Executing...
+[133] ClientHelper-20: King has asked to execute waitForEscapeGate(). Executing...
+[135] ClientHelper-1: Attacker-1 has asked to execute grabWeapon(). Executing...
+[135] ClientHelper-18: Defender-8 has asked to execute defendGate(). Executing...
+[37] ClientHelper-14: has started.
+[36] ClientHelper-13: has started.
+[138] ClientHelper-14: Defender-4 has asked to execute defendGate(). Executing...
+[139] ClientHelper-13: Defender-3 has asked to execute defendGate(). Executing...
+[140] ClientHelper-3: Attacker-3 has asked to execute grabWeapon(). Executing...
+[140] ClientHelper-11: Defender-1 is grabbing a gate since no one is waiting/grabbing one and gate is available.
+[140] ClientHelper-9: Attacker-9 has asked to execute grabWeapon(). Executing...
+[140] ClientHelper-10: Defender-0 has asked to execute defendGate(). Executing...
+[142] ClientHelper-11: Defender-1 has been assigned to defend Gate-0. They are headed there now
+[141] ClientHelper-5: Attacker-5 has entered the armory.
+[140] ClientHelper-12: Defender-2 has asked to execute defendGate(). Executing...
+[142] ClientHelper-17: Defender-7 has to wait for a gate since others ahead/grabbing, or no gate available
+[143] ClientHelper-12: Defender-2 has to wait for a gate since others ahead/grabbing, or no gate available
+[143] ClientHelper-9: Attacker-9 is waiting to grab a weapon since armory full or others ahead.
+[143] ClientHelper-3: Attacker-3 is waiting to grab a weapon since armory full or others ahead.
+[143] ClientHelper-1: Attacker-1 is waiting to grab a weapon since armory full or others ahead.
+[144] ClientHelper-7: Attacker-7 is waiting to grab a weapon since armory full or others ahead.
+[144] ClientHelper-2: Attacker-2 is waiting to grab a weapon since armory full or others ahead.
+[144] ClientHelper-4: Attacker-4 is waiting to grab a weapon since armory full or others ahead.
+[144] ClientHelper-8: Attacker-8 is waiting to grab a weapon since armory full or others ahead.
+[144] ClientHelper-0: Attacker-0 is waiting to grab a weapon since armory full or others ahead.
+[144] ClientHelper-6: Attacker-6 is waiting to grab a weapon since armory full or others ahead.
+[143] ClientHelper-19: Defender-9 has to wait for a gate since others ahead/grabbing, or no gate available
+[144] ClientHelper-5: Attacker-5 has grabbed a weapon of value 9
+[146] ClientHelper-5: Attacker-5 has exited the armory.
+[146] ClientHelper-10: Defender-0 has to wait for a gate since others ahead/grabbing, or no gate available
+[146] ClientHelper-16: Defender-6 has to wait for a gate since others ahead/grabbing, or no gate available
+[146] ClientHelper-9: Attacker-9 has entered the armory.
+[146] ClientHelper-9: Attacker-9 has grabbed a weapon of value 6
+[146] ClientHelper-9: Attacker-9 has exited the armory.
+[146] ClientHelper-13: Defender-3 has to wait for a gate since others ahead/grabbing, or no gate available
+[147] ClientHelper-14: Defender-4 has to wait for a gate since others ahead/grabbing, or no gate available
+[147] ClientHelper-18: Defender-8 has to wait for a gate since others ahead/grabbing, or no gate available
+[147] ClientHelper-15: Defender-5 has to wait for a gate since others ahead/grabbing, or no gate available
+[147] ClientHelper-11: Defender-1 is signaling next waiting defender to go.
+[148] ClientHelper-17: Defender-7 has been assigned to defend Gate-1. They are headed there now
+[148] ClientHelper-17: Defender-7 is signaling next waiting defender to go.
+[148] ClientHelper-12: Defender-2 has been assigned to defend Gate-0. They are headed there now
+[148] ClientHelper-5: Attacker-5 has asked to execute attackGate(). Executing...
+[148] ClientHelper-9: Attacker-9 has asked to execute attackGate(). Executing...
+[148] ClientHelper-12: Defender-2 is signaling next waiting defender to go.
+[149] ClientHelper-19: Defender-9 has been assigned to defend Gate-1. They are headed there now
+[149] ClientHelper-19: Defender-9 is signaling next waiting defender to go.
+[149] ClientHelper-5: Attacker-5 is grabbing a gate since no one is waiting/grabbing one and gate is available.
+[150] ClientHelper-5: Attacker-5 has been assigned to attack Gate-0. They are headed there now
+[151] ClientHelper-9: Attacker-9 has to wait for a gate since others ahead/grabbing, or no gate available
+[151] ClientHelper-10: Defender-0 has been assigned to defend Gate-0. They are headed there now
+[152] ClientHelper-10: Defender-0 is signaling next waiting defender to go.
+[152] ClientHelper-3: Attacker-3 has entered the armory.
+[152] ClientHelper-16: Defender-6 has been assigned to defend Gate-1. They are headed there now
+[152] ClientHelper-3: Attacker-3 has grabbed a weapon of value 7
+[152] ClientHelper-3: Attacker-3 has exited the armory.
+[152] ClientHelper-1: Attacker-1 has entered the armory.
+[152] ClientHelper-1: Attacker-1 has grabbed a weapon of value 5
+[153] ClientHelper-1: Attacker-1 has exited the armory.
+[153] ClientHelper-3: Attacker-3 has asked to execute attackGate(). Executing...
+[153] ClientHelper-7: Attacker-7 has entered the armory.
+[153] ClientHelper-7: Attacker-7 has grabbed a weapon of value 5
+[153] ClientHelper-7: Attacker-7 has exited the armory.
+[153] ClientHelper-2: Attacker-2 has entered the armory.
+[153] ClientHelper-2: Attacker-2 has grabbed a weapon of value 9
+[154] ClientHelper-2: Attacker-2 has exited the armory.
+[154] ClientHelper-4: Attacker-4 has entered the armory.
+[154] ClientHelper-4: Attacker-4 has grabbed a weapon of value 2
+[154] ClientHelper-4: Attacker-4 has exited the armory.
+[154] ClientHelper-1: Attacker-1 has asked to execute attackGate(). Executing...
+[154] ClientHelper-8: Attacker-8 has entered the armory.
+[154] ClientHelper-8: Attacker-8 has grabbed a weapon of value 3
+[154] ClientHelper-2: Attacker-2 has asked to execute attackGate(). Executing...
+[154] ClientHelper-8: Attacker-8 has exited the armory.
+[155] ClientHelper-4: Attacker-4 has asked to execute attackGate(). Executing...
+[155] ClientHelper-0: Attacker-0 has entered the armory.
+[155] ClientHelper-0: Attacker-0 has grabbed a weapon of value 10
+[155] ClientHelper-0: Attacker-0 has exited the armory.
+[155] ClientHelper-8: Attacker-8 has asked to execute attackGate(). Executing...
+[155] ClientHelper-6: Attacker-6 has entered the armory.
+[156] ClientHelper-6: Attacker-6 has grabbed a weapon of value 8
+[156] ClientHelper-6: Attacker-6 has exited the armory.
+[156] ClientHelper-0: Attacker-0 has asked to execute attackGate(). Executing...
+[156] ClientHelper-7: Attacker-7 has asked to execute attackGate(). Executing...
+[156] ClientHelper-6: Attacker-6 has asked to execute attackGate(). Executing...
+[160] ClientHelper-5: Attacker-5 is signaling next waiting attacker to go.
+[160] ClientHelper-9: Attacker-9 has been assigned to attack Gate-1. They are headed there now
+[160] ClientHelper-6: Attacker-6 is grabbing a gate since no one is waiting/grabbing one and gate is available.
+[160] ClientHelper-6: Attacker-6 has been assigned to attack Gate-0. They are headed there now
+[161] ClientHelper-7: Attacker-7 has to wait for a gate since others ahead/grabbing, or no gate available
+[161] ClientHelper-0: Attacker-0 has to wait for a gate since others ahead/grabbing, or no gate available
+[161] ClientHelper-8: Attacker-8 has to wait for a gate since others ahead/grabbing, or no gate available
+[161] ClientHelper-4: Attacker-4 has to wait for a gate since others ahead/grabbing, or no gate available
+[161] ClientHelper-2: Attacker-2 has to wait for a gate since others ahead/grabbing, or no gate available
+[163] ClientHelper-3: Attacker-3 has to wait for a gate since others ahead/grabbing, or no gate available
+[168] ClientHelper-1: Attacker-1 has to wait for a gate since others ahead/grabbing, or no gate available
+[168] ClientHelper-6: Attacker-6 is signaling next waiting attacker to go.
+[168] ClientHelper-7: Attacker-7 has been assigned to attack Gate-1. They are headed there now
+[168] ClientHelper-7: Attacker-7 is signaling next waiting attacker to go.
+[169] ClientHelper-0: Attacker-0 has been assigned to attack Gate-0. They are headed there now
+[169] ClientHelper-0: Attacker-0 is signaling next waiting attacker to go.
+[169] ClientHelper-8: Attacker-8 has been assigned to attack Gate-1. They are headed there now
+[2253] ClientHelper-5: Attacker-5 has arrived to Gate-0
+[2253] ClientHelper-5: Attacker-5 has to wait all others to arrive.
+[3456] ClientHelper-7: Attacker-7 has arrived to Gate-1
+[3456] ClientHelper-7: Attacker-7 has to wait all others to arrive.
+[3809] ClientHelper-19: Defender-9 has arrived to Gate-1
+[3809] ClientHelper-19: Defender-9 has to wait all others to arrive.
+[4161] ClientHelper-17: Defender-7 has arrived to Gate-1
+[4161] ClientHelper-17: Defender-7 has to wait all others to arrive.
+[4189] ClientHelper-0: Attacker-0 has arrived to Gate-0
+[4189] ClientHelper-0: Attacker-0 has to wait all others to arrive.
+[4213] ClientHelper-11: Defender-1 has arrived to Gate-0
+[4213] ClientHelper-11: Defender-1 has to wait all others to arrive.
+[4546] ClientHelper-9: Attacker-9 has arrived to Gate-1
+[4547] ClientHelper-9: Attacker-9 has to wait all others to arrive.
+[4598] ClientHelper-8: Attacker-8 has arrived to Gate-1
+[4598] ClientHelper-8: Attacker-8 has to wait all others to arrive.
+[4680] ClientHelper-6: Attacker-6 has arrived to Gate-0
+[4680] ClientHelper-6: Attacker-6 has to wait all others to arrive.
+[4734] ClientHelper-12: Defender-2 has arrived to Gate-0
+[4734] ClientHelper-12: Defender-2 has to wait all others to arrive.
+[4824] ClientHelper-10: Defender-0 has arrived to Gate-0
+[4825] ClientHelper-10: Defender-0 is last last to arrive to Gate-0. The battle can begin now. They will notify everyone.
+[4839] ClientHelper-10: Defender-0 is waiting for battle results...
+[4839] ClientHelper-5: Attacker-5 is waiting for battle results...
+[4840] ClientHelper-12: Defender-2 is waiting for battle results...
+[4840] ClientHelper-6: Attacker-6 is waiting for battle results...
+[4840] ClientHelper-11: Defender-1 is waiting for battle results...
+[4840] ClientHelper-0: Attacker-0 is waiting for battle results...
+[17] Company-Gate-0-1607013495058: BATTLE HAS BEGUN!!!
+     Attackers: Attacker-5,Attacker-0,Attacker-6
+     Defenders: Defender-1,Defender-2,Defender-0
+[4966] ClientHelper-16: Defender-6 has arrived to Gate-1
+[4967] ClientHelper-16: Defender-6 is last last to arrive to Gate-1. The battle can begin now. They will notify everyone.
+[4967] ClientHelper-16: Defender-6 is waiting for battle results...
+[4967] ClientHelper-7: Attacker-7 is waiting for battle results...
+[141] Company-Gate-1-1607013495199: BATTLE HAS BEGUN!!!
+     Attackers: Attacker-7,Attacker-9,Attacker-8
+     Defenders: Defender-9,Defender-7,Defender-6
+[4967] ClientHelper-8: Attacker-8 is waiting for battle results...
+[4967] ClientHelper-9: Attacker-9 is waiting for battle results...
+[4967] ClientHelper-17: Defender-7 is waiting for battle results...
+[4968] ClientHelper-19: Defender-9 is waiting for battle results...
+[4534] Company-Gate-0-1607013495058: Total Attacker Value: 27 vs. Total Defender Value: 18
+[4534] Company-Gate-0-1607013495058: Attackers win the battle! Castle will take 27 damage. Castle health is now 25
+[4534] Company-Gate-0-1607013495058: Notifying all threads in this company for battle results
+[4534] Company-Gate-0-1607013495058: is terminating.
+[9361] ClientHelper-0: Attacker-0 has asked to execute attackerLeaveGate(). Executing...
+[9361] ClientHelper-6: Attacker-6 has asked to execute attackerLeaveGate(). Executing...
+[9361] ClientHelper-12: Defender-2 has asked to execute defenderLeaveGate(). Executing...
+[9362] ClientHelper-0: Attacker-0 is leaving the Gate-0
+[9362] ClientHelper-11: Defender-1 has asked to execute defenderLeaveGate(). Executing...
+[9362] ClientHelper-5: Attacker-5 has asked to execute attackerLeaveGate(). Executing...
+[9362] ClientHelper-10: Defender-0 has asked to execute defenderLeaveGate(). Executing...
+[9362] ClientHelper-12: Defender-2 is leaving the Gate-0
+[9362] ClientHelper-6: Attacker-6 is leaving the Gate-0
+[9362] ClientHelper-10: Defender-0 is leaving the Gate-0
+[9362] ClientHelper-5: Attacker-5 is leaving the Gate-0
+[9362] ClientHelper-12: Defender-2 has asked to execute rest(). Executing...
+[9362] ClientHelper-11: Defender-1 is leaving the Gate-0
+[9362] ClientHelper-0: Attacker-0 has asked to execute rest(). Executing...
+[9362] ClientHelper-6: Attacker-6 has asked to execute rest(). Executing...
+[9363] ClientHelper-12: Defender-2 is resting before the next battle
+[9363] ClientHelper-0: Attacker-0 is resting before the next battle
+[9363] ClientHelper-6: Attacker-6 is resting before the next battle
+[9363] ClientHelper-13: Defender-3 has been assigned to defend Gate-0. They are headed there now
+[9363] ClientHelper-5: Attacker-5 has asked to execute rest(). Executing...
+[9363] ClientHelper-4: Attacker-4 has been assigned to attack Gate-0. They are headed there now
+[9363] ClientHelper-5: Attacker-5 is resting before the next battle
+[9363] ClientHelper-4: Attacker-4 is signaling next waiting attacker to go.
+[9363] ClientHelper-11: Defender-1 has asked to execute rest(). Executing...
+[9363] ClientHelper-2: Attacker-2 has been assigned to attack Gate-0. They are headed there now
+[9363] ClientHelper-10: Defender-0 has asked to execute rest(). Executing...
+[9363] ClientHelper-13: Defender-3 is signaling next waiting defender to go.
+[9363] ClientHelper-11: Defender-1 is resting before the next battle
+[9364] ClientHelper-14: Defender-4 has been assigned to defend Gate-0. They are headed there now
+[9363] ClientHelper-10: Defender-0 is resting before the next battle
+[9364] ClientHelper-14: Defender-4 is signaling next waiting defender to go.
+[9364] ClientHelper-2: Attacker-2 is signaling next waiting attacker to go.
+[9364] ClientHelper-18: Defender-8 has been assigned to defend Gate-0. They are headed there now
+[9364] ClientHelper-3: Attacker-3 has been assigned to attack Gate-0. They are headed there now
+[5016] Company-Gate-1-1607013495199: Total Attacker Value: 14 vs. Total Defender Value: 15
+[5020] Company-Gate-1-1607013495199: Defenders win the battle! We will let the King know Gate-1 is open to escape.
+[5020] Company-Gate-1-1607013495199: Notifying all threads in this company for battle results
+[5020] Company-Gate-1-1607013495199: is terminating.
+[9847] ClientHelper-9: Attacker-9 has asked to execute attackerLeaveGate(). Executing...
+[9847] ClientHelper-9: Attacker-9 is leaving the Gate-1
+[9847] ClientHelper-20: King has a chance to escape through Gate-1.
+[9847] ClientHelper-19: Defender-9 has asked to execute defenderLeaveGate(). Executing...
+[9848] ClientHelper-19: Defender-9 is leaving the Gate-1
+[9847] ClientHelper-7: Attacker-7 has asked to execute attackerLeaveGate(). Executing...
+[9848] ClientHelper-9: Attacker-9 has asked to execute rest(). Executing...
+[9848] ClientHelper-16: Defender-6 has asked to execute defenderLeaveGate(). Executing...
+[9848] ClientHelper-17: Defender-7 has asked to execute defenderLeaveGate(). Executing...
+[9848] ClientHelper-9: Attacker-9 is resting before the next battle
+[9848] ClientHelper-7: Attacker-7 is leaving the Gate-1
+[9848] ClientHelper-20: King has asked to execute packBelongings(). Executing...
+[9848] ClientHelper-19: Defender-9 has asked to execute rest(). Executing...
+[9848] ClientHelper-8: Attacker-8 has asked to execute attackerLeaveGate(). Executing...
+[9848] ClientHelper-19: Defender-9 is resting before the next battle
+[9848] ClientHelper-17: Defender-7 is leaving the Gate-1
+[9849] ClientHelper-20: King is packing his belongings...
+[9849] ClientHelper-7: Attacker-7 has asked to execute rest(). Executing...
+[9849] ClientHelper-16: Defender-6 is leaving the Gate-1
+[9849] ClientHelper-7: Attacker-7 is resting before the next battle
+[9849] ClientHelper-17: Defender-7 has asked to execute rest(). Executing...
+[9849] ClientHelper-8: Attacker-8 is leaving the Gate-1
+[9849] ClientHelper-17: Defender-7 is resting before the next battle
+[9849] ClientHelper-1: Attacker-1 has been assigned to attack Gate-1. They are headed there now
+[9849] ClientHelper-16: Defender-6 has asked to execute rest(). Executing...
+[9849] ClientHelper-15: Defender-5 has been assigned to defend Gate-1. They are headed there now
+[9849] ClientHelper-8: Attacker-8 has asked to execute rest(). Executing...
+[9849] ClientHelper-16: Defender-6 is resting before the next battle
+[9849] ClientHelper-8: Attacker-8 is resting before the next battle
+[12016] ClientHelper-1: Attacker-1 has arrived to Gate-1
+[12016] ClientHelper-1: Attacker-1 has to wait all others to arrive.
+[12377] ClientHelper-3: Attacker-3 has arrived to Gate-0
+[12378] ClientHelper-3: Attacker-3 has to wait all others to arrive.
+[12380] ClientHelper-15: Defender-5 has arrived to Gate-1
+[12380] ClientHelper-15: Defender-5 has to wait all others to arrive.
+[12612] ClientHelper-2: Attacker-2 has arrived to Gate-0
+[12612] ClientHelper-2: Attacker-2 has to wait all others to arrive.
+[12821] ClientHelper-18: Defender-8 has arrived to Gate-0
+[12821] ClientHelper-18: Defender-8 has to wait all others to arrive.
+[12849] ClientHelper-20: King has asked to execute tryToEscape(). Executing...
+[12850] ClientHelper-20: King couldn't escape since an Attacker arrived at Gate-1. They will wait again...
+[12850] ClientHelper-20: King has asked to execute waitForEscapeGate(). Executing...
+[13683] ClientHelper-13: Defender-3 has arrived to Gate-0
+[13683] ClientHelper-13: Defender-3 has to wait all others to arrive.
+[13988] ClientHelper-14: Defender-4 has arrived to Gate-0
+[13988] ClientHelper-14: Defender-4 has to wait all others to arrive.
+[14271] ClientHelper-4: Attacker-4 has arrived to Gate-0
+[14272] ClientHelper-4: Attacker-4 is last last to arrive to Gate-0. The battle can begin now. They will notify everyone.
+[14272] ClientHelper-4: Attacker-4 is waiting for battle results...
+[14272] ClientHelper-3: Attacker-3 is waiting for battle results...
+[9446] Company-Gate-0-1607013504504: BATTLE HAS BEGUN!!!
+     Attackers: Attacker-3,Attacker-2,Attacker-4
+     Defenders: Defender-8,Defender-3,Defender-4
+[14273] ClientHelper-14: Defender-4 is waiting for battle results...
+[14273] ClientHelper-13: Defender-3 is waiting for battle results...
+[14273] ClientHelper-18: Defender-8 is waiting for battle results...
+[14273] ClientHelper-2: Attacker-2 is waiting for battle results...
+[15480] ClientHelper-5: Attacker-5 has asked to execute attackGate(). Executing...
+[15480] ClientHelper-5: Attacker-5 is grabbing a gate since no one is waiting/grabbing one and gate is available.
+[15480] ClientHelper-5: Attacker-5 has been assigned to attack Gate-1. They are headed there now
+[15817] ClientHelper-11: Defender-1 has asked to execute defendGate(). Executing...
+[15818] ClientHelper-11: Defender-1 is grabbing a gate since no one is waiting/grabbing one and gate is available.
+[15818] ClientHelper-11: Defender-1 has been assigned to defend Gate-1. They are headed there now
+[15906] ClientHelper-17: Defender-7 has asked to execute defendGate(). Executing...
+[15906] ClientHelper-17: Defender-7 is grabbing a gate since no one is waiting/grabbing one and gate is available.
+[15906] ClientHelper-17: Defender-7 has been assigned to defend Gate-1. They are headed there now
+[15906] ClientHelper-0: Attacker-0 has asked to execute attackGate(). Executing...
+[15906] ClientHelper-0: Attacker-0 is grabbing a gate since no one is waiting/grabbing one and gate is available.
+[15906] ClientHelper-0: Attacker-0 has been assigned to attack Gate-1. They are headed there now
+[16043] ClientHelper-16: Defender-6 has asked to execute defendGate(). Executing...
+[16043] ClientHelper-16: Defender-6 has to wait for a gate since others ahead/grabbing, or no gate available
+[16106] ClientHelper-12: Defender-2 has asked to execute defendGate(). Executing...
+[16106] ClientHelper-12: Defender-2 has to wait for a gate since others ahead/grabbing, or no gate available
+[16116] ClientHelper-6: Attacker-6 has asked to execute attackGate(). Executing...
+[16116] ClientHelper-6: Attacker-6 has to wait for a gate since others ahead/grabbing, or no gate available
+[16119] ClientHelper-19: Defender-9 has asked to execute defendGate(). Executing...
+[16119] ClientHelper-19: Defender-9 has to wait for a gate since others ahead/grabbing, or no gate available
+[16208] ClientHelper-7: Attacker-7 has asked to execute attackGate(). Executing...
+[16208] ClientHelper-7: Attacker-7 has to wait for a gate since others ahead/grabbing, or no gate available
+[16279] ClientHelper-10: Defender-0 has asked to execute defendGate(). Executing...
+[16279] ClientHelper-10: Defender-0 has to wait for a gate since others ahead/grabbing, or no gate available
+[16298] ClientHelper-9: Attacker-9 has asked to execute attackGate(). Executing...
+[16298] ClientHelper-9: Attacker-9 has to wait for a gate since others ahead/grabbing, or no gate available
+[16715] ClientHelper-8: Attacker-8 has asked to execute attackGate(). Executing...
+[16715] ClientHelper-8: Attacker-8 has to wait for a gate since others ahead/grabbing, or no gate available
+[18056] ClientHelper-0: Attacker-0 has arrived to Gate-1
+[18056] ClientHelper-0: Attacker-0 has to wait all others to arrive.
+[13916] Company-Gate-0-1607013504504: Total Attacker Value: 18 vs. Total Defender Value: 16
+[13916] Company-Gate-0-1607013504504: Attackers win the battle! Castle will take 18 damage. Castle health is now 7
+[13916] Company-Gate-0-1607013504504: Notifying all threads in this company for battle results
+[13916] Company-Gate-0-1607013504504: is terminating.
+[18743] ClientHelper-3: Attacker-3 has asked to execute attackerLeaveGate(). Executing...
+[18743] ClientHelper-2: Attacker-2 has asked to execute attackerLeaveGate(). Executing...
+[18743] ClientHelper-14: Defender-4 has asked to execute defenderLeaveGate(). Executing...
+[18743] ClientHelper-3: Attacker-3 is leaving the Gate-0
+[18743] ClientHelper-18: Defender-8 has asked to execute defenderLeaveGate(). Executing...
+[18743] ClientHelper-4: Attacker-4 has asked to execute attackerLeaveGate(). Executing...
+[18743] ClientHelper-14: Defender-4 is leaving the Gate-0
+[18743] ClientHelper-13: Defender-3 has asked to execute defenderLeaveGate(). Executing...
+[18743] ClientHelper-3: Attacker-3 has asked to execute rest(). Executing...
+[18743] ClientHelper-2: Attacker-2 is leaving the Gate-0
+[18743] ClientHelper-3: Attacker-3 is resting before the next battle
+[18744] ClientHelper-13: Defender-3 is leaving the Gate-0
+[18744] ClientHelper-14: Defender-4 has asked to execute rest(). Executing...
+[18744] ClientHelper-14: Defender-4 is resting before the next battle
+[18744] ClientHelper-4: Attacker-4 is leaving the Gate-0
+[18744] ClientHelper-2: Attacker-2 has asked to execute rest(). Executing...
+[18744] ClientHelper-18: Defender-8 is leaving the Gate-0
+[18744] ClientHelper-13: Defender-3 has asked to execute rest(). Executing...
+[18744] ClientHelper-13: Defender-3 is resting before the next battle
+[18744] ClientHelper-2: Attacker-2 is resting before the next battle
+[18744] ClientHelper-4: Attacker-4 has asked to execute rest(). Executing...
+[18744] ClientHelper-6: Attacker-6 has been assigned to attack Gate-0. They are headed there now
+[18744] ClientHelper-4: Attacker-4 is resting before the next battle
+[18744] ClientHelper-6: Attacker-6 is signaling next waiting attacker to go.
+[18744] ClientHelper-18: Defender-8 has asked to execute rest(). Executing...
+[18744] ClientHelper-18: Defender-8 is resting before the next battle
+[18744] ClientHelper-16: Defender-6 has been assigned to defend Gate-0. They are headed there now
+[18744] ClientHelper-7: Attacker-7 has been assigned to attack Gate-0. They are headed there now
+[18744] ClientHelper-7: Attacker-7 is signaling next waiting attacker to go.
+[18745] ClientHelper-16: Defender-6 is signaling next waiting defender to go.
+[18745] ClientHelper-9: Attacker-9 has been assigned to attack Gate-0. They are headed there now
+[18745] ClientHelper-12: Defender-2 has been assigned to defend Gate-0. They are headed there now
+[18745] ClientHelper-12: Defender-2 is signaling next waiting defender to go.
+[18745] ClientHelper-19: Defender-9 has been assigned to defend Gate-0. They are headed there now
+[19075] ClientHelper-11: Defender-1 has arrived to Gate-1
+[19075] ClientHelper-11: Defender-1 has to wait all others to arrive.
+[19558] ClientHelper-5: Attacker-5 has arrived to Gate-1
+[19558] ClientHelper-5: Attacker-5 has to wait all others to arrive.
+[19915] ClientHelper-17: Defender-7 has arrived to Gate-1
+[19916] ClientHelper-17: Defender-7 is last last to arrive to Gate-1. The battle can begin now. They will notify everyone.
+[19916] ClientHelper-17: Defender-7 is waiting for battle results...
+[19916] ClientHelper-1: Attacker-1 is waiting for battle results...
+[15090] Company-Gate-1-1607013510148: BATTLE HAS BEGUN!!!
+     Attackers: Attacker-1,Attacker-0,Attacker-5
+     Defenders: Defender-5,Defender-1,Defender-7
+[19916] ClientHelper-5: Attacker-5 is waiting for battle results...
+[19916] ClientHelper-11: Defender-1 is waiting for battle results...
+[19916] ClientHelper-0: Attacker-0 is waiting for battle results...
+[19916] ClientHelper-15: Defender-5 is waiting for battle results...
+[20872] ClientHelper-6: Attacker-6 has arrived to Gate-0
+[20873] ClientHelper-6: Attacker-6 has to wait all others to arrive.
+[21273] ClientHelper-7: Attacker-7 has arrived to Gate-0
+[21273] ClientHelper-7: Attacker-7 has to wait all others to arrive.
+[21931] ClientHelper-19: Defender-9 has arrived to Gate-0
+[21931] ClientHelper-19: Defender-9 has to wait all others to arrive.
+[22794] ClientHelper-9: Attacker-9 has arrived to Gate-0
+[22794] ClientHelper-9: Attacker-9 has to wait all others to arrive.
+[23004] ClientHelper-16: Defender-6 has arrived to Gate-0
+[23004] ClientHelper-16: Defender-6 has to wait all others to arrive.
+[23422] ClientHelper-12: Defender-2 has arrived to Gate-0
+[23422] ClientHelper-12: Defender-2 is last last to arrive to Gate-0. The battle can begin now. They will notify everyone.
+[23422] ClientHelper-12: Defender-2 is waiting for battle results...
+[23422] ClientHelper-6: Attacker-6 is waiting for battle results...
+[18597] Company-Gate-0-1607013513654: BATTLE HAS BEGUN!!!
+     Attackers: Attacker-6,Attacker-7,Attacker-9
+     Defenders: Defender-9,Defender-6,Defender-2
+[23423] ClientHelper-16: Defender-6 is waiting for battle results...
+[23423] ClientHelper-9: Attacker-9 is waiting for battle results...
+[23423] ClientHelper-19: Defender-9 is waiting for battle results...
+[23423] ClientHelper-7: Attacker-7 is waiting for battle results...
+[19700] Company-Gate-1-1607013510148: Total Attacker Value: 24 vs. Total Defender Value: 12
+[19700] Company-Gate-1-1607013510148: Attackers win the battle! Castle will take 24 damage. Castle health is now -17
++++++
++++++
++++++
+ATTACKERS WIN! CASTLE DOWN!
++++++
++++++
++++++
+[19701] Company-Gate-1-1607013510148: is terminating.
+[24802] ClientHelper-12: Defender-2 has asked to execute endConnection(). Executing...
+[24803] ClientHelper-11: Defender-1 has asked to execute endConnection(). Executing...
+[24803] ClientHelper-12: has terminated.
+[24803] ClientHelper-16: Defender-6 has asked to execute endConnection(). Executing...
+[24803] ClientHelper-15: Defender-5 has asked to execute endConnection(). Executing...
+[24803] ClientHelper-20: King has asked to execute endConnection(). Executing...
+[24803] ClientHelper-11: has terminated.
+[24803] ClientHelper-7: Attacker-7 has asked to execute endConnection(). Executing...
+[24804] ClientHelper-10: Defender-0 has asked to execute endConnection(). Executing...
+[24804] ClientHelper-3: Attacker-3 has asked to execute endConnection(). Executing...
+[24804] ClientHelper-15: has terminated.
+[24804] ClientHelper-16: has terminated.
+[24805] ClientHelper-7: has terminated.
+[24805] ClientHelper-1: Attacker-1 has asked to execute endConnection(). Executing...
+[24805] ClientHelper-20: has terminated.
+[24805] ClientHelper-3: has terminated.
+[24805] ClientHelper-10: has terminated.
+[24805] ClientHelper-1: has terminated.
+[24848] ClientHelper-5: Attacker-5 has asked to execute endConnection(). Executing...
+[24848] ClientHelper-0: Attacker-0 has asked to execute endConnection(). Executing...
+[24849] ClientHelper-8: Attacker-8 has asked to execute endConnection(). Executing...
+[24849] ClientHelper-17: Defender-7 has asked to execute endConnection(). Executing...
+[24848] ClientHelper-6: Attacker-6 has asked to execute endConnection(). Executing...
+[24848] ClientHelper-5: has terminated.
+[24849] ClientHelper-8: has terminated.
+[24849] ClientHelper-17: has terminated.
+[24849] ClientHelper-9: Attacker-9 has asked to execute endConnection(). Executing...
+[24849] ClientHelper-0: has terminated.
+[24850] ClientHelper-19: Defender-9 has asked to execute endConnection(). Executing...
+[24850] ClientHelper-9: has terminated.
+[24849] ClientHelper-6: has terminated.
+[24850] ClientHelper-19: has terminated.
+[24924] ClientHelper-18: Defender-8 has asked to execute endConnection(). Executing...
+[24924] ClientHelper-18: has terminated.
+[24959] ClientHelper-13: Defender-3 has asked to execute endConnection(). Executing...
+[24959] ClientHelper-13: has terminated.
+[25220] ClientHelper-2: Attacker-2 has asked to execute endConnection(). Executing...
+[25220] ClientHelper-2: has terminated.
+[25539] ClientHelper-14: Defender-4 has asked to execute endConnection(). Executing...
+[25540] ClientHelper-14: has terminated.
+[25720] ClientHelper-4: Attacker-4 has asked to execute endConnection(). Executing...
+[25720] ClientHelper-4: has terminated.
+[23160] Company-Gate-0-1607013513654: is terminating.
+
+
+///////// Client Output
+
+[Client]: has started with default values: #Attackers=10, #Defenders=10, #Gates=2, #SpacesPerGate=3
+[Client]: Waiting to connect to server to send over num of gates, spaces, and castle health
+[Client]: Connected to server. Sending over initial data...
+[Client]: Sent num of gates
+[Client]: Sent num of spaces per gate
+[Client]: Sent castle health
+[Client]: Waiting for server to reply..
+[Client]: Server replied.
+[30] Attacker-0: requesting to connect to server
+[52] Attacker-0: is now connected to the server
+[52] Attacker-1: requesting to connect to server
+[52] Attacker-1: is now connected to the server
+[53] Attacker-2: requesting to connect to server
+[53] Attacker-2: is now connected to the server
+[53] Attacker-3: requesting to connect to server
+[53] Attacker-3: is now connected to the server
+[53] Attacker-4: requesting to connect to server
+[54] Attacker-4: is now connected to the server
+[54] Attacker-5: requesting to connect to server
+[54] Attacker-5: is now connected to the server
+[54] Attacker-6: requesting to connect to server
+[54] Attacker-6: is now connected to the server
+[55] Attacker-7: requesting to connect to server
+[55] Attacker-7: is now connected to the server
+[55] Attacker-8: requesting to connect to server
+[55] Attacker-8: is now connected to the server
+[55] Attacker-9: requesting to connect to server
+[56] Attacker-9: is now connected to the server
+[56] Defender-0: requesting to connect to server
+[56] Defender-0: is now connected to the server
+[56] Defender-1: requesting to connect to server
+[56] Defender-1: is now connected to the server
+[56] Defender-2: requesting to connect to server
+[57] Defender-2: is now connected to the server
+[57] Defender-3: requesting to connect to server
+[57] Defender-3: is now connected to the server
+[57] Defender-4: requesting to connect to server
+[57] Defender-4: is now connected to the server
+[58] Defender-5: requesting to connect to server
+[58] Defender-5: is now connected to the server
+[58] Defender-6: requesting to connect to server
+[58] Defender-6: is now connected to the server
+[58] Defender-7: requesting to connect to server
+[59] Defender-7: is now connected to the server
+[59] Defender-8: requesting to connect to server
+[59] Defender-8: is now connected to the server
+[59] Defender-9: requesting to connect to server
+[59] Defender-9: is now connected to the server
+[60] King: requesting to connect to server
+[60] King: is now connected to the server
+[Client]: Starting game.
+[63] Attacker-0: has been created.
+[64] Attacker-0: requesting server to invoke grabWeapon()
+[64] Attacker-1: has been created.
+[64] Attacker-1: requesting server to invoke grabWeapon()
+[66] Attacker-2: has been created.
+[66] Attacker-2: requesting server to invoke grabWeapon()
+[66] Attacker-3: has been created.
+[66] Attacker-3: requesting server to invoke grabWeapon()
+[67] Attacker-4: has been created.
+[67] Attacker-4: requesting server to invoke grabWeapon()
+[67] Attacker-6: has been created.
+[69] Attacker-6: requesting server to invoke grabWeapon()
+[67] Attacker-5: has been created.
+[70] Attacker-5: requesting server to invoke grabWeapon()
+[69] Attacker-7: has been created.
+[70] Attacker-8: has been created.
+[71] Attacker-7: requesting server to invoke grabWeapon()
+[71] Attacker-8: requesting server to invoke grabWeapon()
+[71] Attacker-9: has been created.
+[71] Attacker-9: requesting server to invoke grabWeapon()
+[90] King: has been created.
+[90] King: requesting server to invoke waitForEscapeGate()
+[98] Defender-8: has been created with defense value of 1
+[98] Defender-8: requesting server to invoke defendGate()
+[98] Defender-9: has been created with defense value of 9
+[98] Defender-9: requesting server to invoke defendGate()
+[103] Defender-5: has been created with defense value of 3
+[103] Defender-0: has been created with defense value of 4
+[103] Defender-0: requesting server to invoke defendGate()
+[103] Defender-2: has been created with defense value of 9
+[103] Defender-1: has been created with defense value of 5
+[103] Defender-3: has been created with defense value of 8
+[106] Defender-1: requesting server to invoke defendGate()
+[106] Defender-2: requesting server to invoke defendGate()
+[106] Defender-4: has been created with defense value of 7
+[107] Defender-4: requesting server to invoke defendGate()
+[106] Defender-6: has been created with defense value of 2
+[107] Defender-6: requesting server to invoke defendGate()
+[103] Defender-7: has been created with defense value of 4
+[103] Defender-5: requesting server to invoke defendGate()
+[106] Defender-3: requesting server to invoke defendGate()
+[108] Defender-7: requesting server to invoke defendGate()
+[182] Attacker-9: has obtained weapon of value 6
+[182] Attacker-9: requesting server to invoke attackGate()
+[183] Attacker-5: has obtained weapon of value 9
+[183] Attacker-5: requesting server to invoke attackGate()
+[187] Attacker-3: has obtained weapon of value 7
+[187] Attacker-3: requesting server to invoke attackGate()
+[189] Attacker-1: has obtained weapon of value 5
+[189] Attacker-1: requesting server to invoke attackGate()
+[189] Attacker-2: has obtained weapon of value 9
+[189] Attacker-2: requesting server to invoke attackGate()
+[189] Attacker-4: has obtained weapon of value 2
+[189] Attacker-4: requesting server to invoke attackGate()
+[190] Attacker-8: has obtained weapon of value 3
+[190] Attacker-8: requesting server to invoke attackGate()
+[190] Attacker-7: has obtained weapon of value 5
+[190] Attacker-7: requesting server to invoke attackGate()
+[190] Attacker-0: has obtained weapon of value 10
+[191] Attacker-0: requesting server to invoke attackGate()
+[191] Attacker-6: has obtained weapon of value 8
+[191] Attacker-6: requesting server to invoke attackGate()
+[9396] Attacker-6: requesting server to invoke attackerLeaveGate()
+[9396] Attacker-0: requesting server to invoke attackerLeaveGate()
+[9396] Attacker-5: requesting server to invoke attackerLeaveGate()
+[9396] Defender-2: requesting server to invoke defenderLeaveGate()
+[9396] Defender-1: requesting server to invoke defenderLeaveGate()
+[9396] Defender-0: requesting server to invoke defenderLeaveGate()
+[9397] Defender-2: requesting server to invoke rest()
+[9397] Attacker-0: requesting server to invoke rest()
+[9397] Attacker-6: requesting server to invoke rest()
+[9398] Defender-0: requesting server to invoke rest()
+[9398] Attacker-5: requesting server to invoke rest()
+[9398] Defender-1: requesting server to invoke rest()
+[9882] Attacker-9: requesting server to invoke attackerLeaveGate()
+[9882] Defender-9: requesting server to invoke defenderLeaveGate()
+[9882] Attacker-7: requesting server to invoke attackerLeaveGate()
+[9882] Defender-7: requesting server to invoke defenderLeaveGate()
+[9882] Defender-6: requesting server to invoke defenderLeaveGate()
+[9882] Attacker-9: requesting server to invoke rest()
+[9882] Attacker-8: requesting server to invoke attackerLeaveGate()
+[9883] Defender-9: requesting server to invoke rest()
+[9883] King: requesting server to invoke packBelongings()
+[9883] Attacker-7: requesting server to invoke rest()
+[9884] Defender-7: requesting server to invoke rest()
+[9884] Defender-6: requesting server to invoke rest()
+[9884] Attacker-8: requesting server to invoke rest()
+[12884] King: requesting server to invoke tryToEscape()
+[12885] King: requesting server to invoke waitForEscapeGate()
+[15514] Attacker-5: requesting server to invoke attackGate()
+[15852] Defender-1: requesting server to invoke defendGate()
+[15941] Defender-7: requesting server to invoke defendGate()
+[15941] Attacker-0: requesting server to invoke attackGate()
+[16078] Defender-6: requesting server to invoke defendGate()
+[16141] Defender-2: requesting server to invoke defendGate()
+[16151] Attacker-6: requesting server to invoke attackGate()
+[16154] Defender-9: requesting server to invoke defendGate()
+[16243] Attacker-7: requesting server to invoke attackGate()
+[16314] Defender-0: requesting server to invoke defendGate()
+[16333] Attacker-9: requesting server to invoke attackGate()
+[16750] Attacker-8: requesting server to invoke attackGate()
+[18778] Attacker-3: requesting server to invoke attackerLeaveGate()
+[18778] Attacker-2: requesting server to invoke attackerLeaveGate()
+[18778] Defender-4: requesting server to invoke defenderLeaveGate()
+[18778] Defender-8: requesting server to invoke defenderLeaveGate()
+[18778] Attacker-4: requesting server to invoke attackerLeaveGate()
+[18778] Defender-3: requesting server to invoke defenderLeaveGate()
+[18778] Attacker-3: requesting server to invoke rest()
+[18778] Defender-4: requesting server to invoke rest()
+[18779] Attacker-2: requesting server to invoke rest()
+[18779] Defender-3: requesting server to invoke rest()
+[18779] Attacker-4: requesting server to invoke rest()
+[18779] Defender-8: requesting server to invoke rest()
+[24837] Defender-2: requesting server to invoke endConnection()
+[24837] Defender-1: requesting server to invoke endConnection()
+[24837] King: requesting server to invoke endConnection()
+[24837] Defender-6: requesting server to invoke endConnection()
+[24837] Attacker-7: requesting server to invoke endConnection()
+[24837] Defender-5: requesting server to invoke endConnection()
+[24838] Attacker-7: Closing connection to server since game finished.
+[24838] Defender-6: Closing connection to server since game finished.
+[24838] King: Closing connection to server since game finished.
+[24838] Defender-1: Closing connection to server since game finished.
+[24837] Defender-2: Closing connection to server since game finished.
+[24837] Defender-0: requesting server to invoke endConnection()
+[24837] Attacker-3: requesting server to invoke endConnection()
+[24839] Defender-0: Closing connection to server since game finished.
+[24839] Attacker-3: Closing connection to server since game finished.
+[24837] Attacker-1: requesting server to invoke endConnection()
+[24839] Attacker-3: has terminated.
+[24839] Defender-2: has terminated.
+[24839] King: has terminated.
+[24839] Defender-1: has terminated.
+[24838] Defender-6: has terminated.
+[24838] Attacker-7: has terminated.
+[24838] Defender-5: Closing connection to server since game finished.
+[24839] Attacker-1: Closing connection to server since game finished.
+[24839] Defender-0: has terminated.
+[24841] Attacker-1: has terminated.
+[24841] Defender-5: has terminated.
+[24883] Attacker-5: requesting server to invoke endConnection()
+[24883] Attacker-0: requesting server to invoke endConnection()
+[24883] Attacker-6: requesting server to invoke endConnection()
+[24883] Attacker-8: requesting server to invoke endConnection()
+[24883] Attacker-6: Closing connection to server since game finished.
+[24883] Defender-7: requesting server to invoke endConnection()
+[24883] Attacker-9: requesting server to invoke endConnection()
+[24884] Defender-7: Closing connection to server since game finished.
+[24884] Attacker-6: has terminated.
+[24884] Defender-7: has terminated.
+[24883] Defender-9: requesting server to invoke endConnection()
+[24884] Attacker-9: Closing connection to server since game finished.
+[24883] Attacker-8: Closing connection to server since game finished.
+[24885] Attacker-9: has terminated.
+[24883] Attacker-0: Closing connection to server since game finished.
+[24883] Attacker-5: Closing connection to server since game finished.
+[24885] Attacker-0: has terminated.
+[24885] Attacker-8: has terminated.
+[24884] Defender-9: Closing connection to server since game finished.
+[24885] Attacker-5: has terminated.
+[24886] Defender-9: has terminated.
+[24959] Defender-8: requesting server to invoke endConnection()
+[24959] Defender-8: Closing connection to server since game finished.
+[24959] Defender-8: has terminated.
+[24993] Defender-3: requesting server to invoke endConnection()
+[24994] Defender-3: Closing connection to server since game finished.
+[24994] Defender-3: has terminated.
+[25255] Attacker-2: requesting server to invoke endConnection()
+[25255] Attacker-2: Closing connection to server since game finished.
+[25255] Attacker-2: has terminated.
+[25574] Defender-4: requesting server to invoke endConnection()
+[25574] Defender-4: Closing connection to server since game finished.
+[25575] Defender-4: has terminated.
+[25755] Attacker-4: requesting server to invoke endConnection()
+[25755] Attacker-4: Closing connection to server since game finished.
+[25755] Attacker-4: has terminated.
