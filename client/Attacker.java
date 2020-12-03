@@ -1,6 +1,5 @@
 package client;
 
-import java.net.Socket;
 import shared.RPCMethods;
 
 public class Attacker extends GameThread {

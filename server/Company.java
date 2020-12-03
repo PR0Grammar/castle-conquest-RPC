@@ -58,7 +58,6 @@ public class Company extends Thread {
             }
         } else if (sumOfAttackers < sumOfDefenders) {
             msg("Defenders win the battle! We will let the King know " + gate.getTitle() + " is open to escape.");
-            // TODO Game Check
             escapeRoutes.addEscapeRoute(gate);
         } else {
             msg("It's a tie! Nothing will take place.");

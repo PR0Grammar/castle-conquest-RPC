@@ -34,6 +34,8 @@ public class Client {
         return sum;
     }
 
+    // Send the server some initial data for its own variables
+    // The number of gates, num of spaces, and the total castle health
     public void sendInitialData() {
         msg("Waiting to connect to server to send over num of gates, spaces, and castle health");
         try {
@@ -116,11 +118,11 @@ public class Client {
     }
 
     public Client() {
-        msg("has started.");
         attackerCount = DEFAULT_ATTACKER_COUNT;
         defenderCount = DEFAULT_DEFENDER_COUNT;
         gateCount = DEFAULT_GATE_COUNT;
         space = DEFAULT_SPACE;
+        msg("has started with default values: #Attackers=" + attackerCount +", #Defenders=" + defenderCount + ", #Gates=" + gateCount + ", #SpacesPerGate=" + space);
 
         // Create threads
         createThreads();
@@ -135,12 +137,12 @@ public class Client {
         startGame();
     }
 
-    public Client(int a, int d, int g, int s) {
-        msg("has started.");
+    public Client(int a, int d, int g, int s) {        
         attackerCount = a;
         defenderCount = d;
         gateCount = g;
         space = s;
+        msg("has started with provided arguments: #Attackers=" + attackerCount +", #Defenders=" + defenderCount + ", #Gates=" + gateCount + ", #SpacesPerGate=" + space);
 
         // Create threads
         createThreads();
@@ -155,7 +157,30 @@ public class Client {
         startGame();
     }
 
+    // Arguments (IN ORDER): number of attackers, number of defenders, number of gates, number of spaces
+    // If any argument missing or its value is <= 0, then the program will use default values
+    // otherwise, it will use provided arguments
     public static void main(String[] args) {
-        new Client();
+        int[] gameArgs = {-1, -1, -1, -1};
+
+        for(int i = 0; i < Math.min(4, args.length); i++){
+            gameArgs[i] = Integer.parseInt(args[i]);
+        }
+
+        boolean validArgs = true;
+
+        // Check if all values are > 0
+        for(int a: gameArgs){
+            if(a <= 0) validArgs = false;
+        }
+
+        // If valid args, use them
+        if(validArgs){
+            new Client(gameArgs[0], gameArgs[1], gameArgs[2], gameArgs[3]);
+        }
+        // Else default
+        else{
+            new Client();
+        }
     }
 }

@@ -1,5 +1,3 @@
-- add game status update logic
-
-- add game finished checks everywhere
+- Add args for client
 
 - MAKE SURE TO UNCOMMENT HAHAs

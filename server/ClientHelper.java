@@ -49,7 +49,7 @@ public class ClientHelper extends Thread{
     // Returns an array of size 3: 
     // first element is name of client thread (string)
     // second is method it wants to invoke (integer)
-    // third element is attacker/defender value (integer), but default is -1 if no value
+    // third element is attacker/defender value (integer) used for the battle summation, but default is -1 if no value needed for other methods
     public Object[] readFromClient() throws IOException{
         Object[] rtr = new Object[3];
 
@@ -114,7 +114,7 @@ public class ClientHelper extends Thread{
         armory.enterArmory(this, clientThreadName);
 
         int weaponVal = armory.getWeapon();
-        // HAHA msg(clientThreadName + " has grabbed a weapon of value " + weaponVal);
+        msg(clientThreadName + " has grabbed a weapon of value " + weaponVal);
         armory.leaveArmory(this, clientThreadName);
         
         // Let client know weapon value
@@ -372,7 +372,7 @@ public class ClientHelper extends Thread{
     }
     
     public void run(){
-        // HAHA msg("has started.");
+        msg("has started.");
 
         try{
             // Listen to requests from client
@@ -396,7 +396,7 @@ public class ClientHelper extends Thread{
                     case(RPCMethods.TRY_TO_ESCAPE):
                     case(RPCMethods.ATTACKER_LEAVE_GATE):
                     case(RPCMethods.DEFENDER_LEAVE_GATE):
-                        // HAHA msg(threadName + " has asked to execute " + RPCMethods.getMethodName(methodToInvoke) + ". Executing...");
+                        msg(threadName + " has asked to execute " + RPCMethods.getMethodName(methodToInvoke) + ". Executing...");
                         break;
                     default:
                         msg(threadName + " has sent request, but method does not exist.");
