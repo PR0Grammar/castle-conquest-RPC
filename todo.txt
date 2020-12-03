@@ -1,3 +1,0 @@
-- Add args for client
-
-- MAKE SURE TO UNCOMMENT HAHAs
